@@ -1,0 +1,69 @@
+[
+  {
+    "id": 1,
+    "className": "Харацинові (лат. Characidae)",
+    "image": "https://i.postimg.cc/bYBCjsVy/Characidae.jpg",
+    "image_alt": "Characidae",
+    "details": {
+      "description": "Маленькі тропічні рибки, що входять до ряду харациподібних. Харацинові мають яскраве забарвлення, їх легко тримати в неволі, тому вони популярні серед акваріумістів."
+    },
+    "items": [
+      {
+        "id": 1.1,
+        "title": "Тетра Аманди (Hyphessobrycon amandae)",
+        "description": "This is a description of Fish 1.",
+        "images": [
+          {
+            "src": "https://i.postimg.cc/148W0hH6/Hyphessobrycon-amandae1.jpg",
+            "alt": "Hyphessobrycon-amandae1"
+          },
+          {
+            "src": "https://i.postimg.cc/bDBmX3zs/Hyphessobrycon-amandae2.jpg",
+            "alt": "Hyphessobrycon-amandae2"
+          }
+        ]
+      },
+      {
+        "id": 1.2,
+        "title": "Неон червоний (Paracheirodon axelrodi)",
+        "description": "This is a description of Fish 2.",
+        "images": [
+          {
+            "src": "https://i.postimg.cc/9zsLJ88k/red-neon1.jpg",
+            "alt": "red-neon1"
+          },
+          {
+            "src": "https://i.postimg.cc/KRLJVPC8/red-neon2.jpg",
+            "alt": "red-neon2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "className": "Мелатонінові (лат. Melanotaeniidae)",
+    "image": "https://i.postimg.cc/yY3f6s2F/Rainbow-fish.jpg",
+    "image_alt": "Melanotaeniidae",
+    "details": {
+      "description": "Маленькі тропічні рибки, що входять до ряду харациподібних. Харацинові мають яскраве забарвлення, їх легко тримати в неволі, тому вони популярні серед акваріумістів."
+    },
+    "items": [
+      {
+        "id": 2.1,
+        "title": "Тетра Аманди (Hyphessobrycon amandae)",
+        "description": "This is a description of Fish 1.",
+        "images": [
+          {
+            "src": "https://i.postimg.cc/vgB0SpwJ/Pseudomugil-furcatus1.jpg",
+            "alt": "Pseudomugil-furcatus1"
+          },
+          {
+            "src": "https://i.postimg.cc/7JJmq06X/Pseudomugil-furcatus2.jpg",
+            "alt": "Pseudomugil-furcatus1"
+          }
+        ]
+      }
+    ]
+  }
+]
