@@ -26,7 +26,7 @@ async function fetchFishData() {
   showLoader();
 
   try {
-    const response = await fetch("../json/fish.json");
+    const response = await fetch("./json/fish.json");
     if (!response.ok) throw new Error("Не вдалося завантажити JSON файл");
     const fishData = await response.json();
     cachedFishData = fishData; // Кешуємо дані
