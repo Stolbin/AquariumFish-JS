@@ -1,0 +1,19 @@
+.search_input {
+  width: 80%;
+  height: 25px;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  background: #f2f4f6;
+  border: #10559b;
+  outline: none;
+  padding-left: 10px;
+  border-radius: 10px;
+  caret-color: black;
+  &::placeholder {
+    padding-left: 2px;
+    font-family: "Segoe UI";
+    font-size: 14px;
+    color: #778899;
+  }
+}

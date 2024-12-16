@@ -1,0 +1,35 @@
+.fish_item_box_title {
+  font-size: 18px;
+  font-weight: 700;
+  color: rgb(37, 30, 30);
+}
+
+.fish_item_box_description {
+  font-family: "Oswald", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.fish_item_img_details {
+  display: flex;
+  flex-direction: row;
+  gap: 14px;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 14px;
+}
+
+.fish_item_details_image {
+  width: 250px;
+  height: 170px;
+  border-radius: 8px;
+  overflow: hidden;
+  object-fit: cover;
+  object-position: center;
+  transition: box-shadow 0.5s ease-in-out;
+  &:hover {
+    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.5s ease-in-out;
+  }
+}
