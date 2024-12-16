@@ -1,30 +1,20 @@
-//* Основні елементи DOM
+// Основні елементи DOM
 const mainContainer = document.querySelector("main");
 const fishBoxContainer = document.querySelector(".fish_box_container");
 const searchInput = document.querySelector(".search_input");
 const loader = document.getElementById("loader");
 
-//* Контейнер для рендерингу Fish_type_box
+// Контейнер для рендерингу Fish_type_box
 const fishTypeBoxesContainer = document.createElement("div");
 fishTypeBoxesContainer.classList.add("fish_type_boxes_container");
 mainContainer.appendChild(fishTypeBoxesContainer);
 
-//* Показ лоадера
-function showLoader() {
-  loader.style.display = "flex";
-}
-
-function hideLoader() {
-  loader.style.display = "none";
-}
-
-//* Кеш даних
+// Кеш даних
 let cachedFishData = null;
 
 //* Завантаження JSON з файлу
 async function fetchFishData() {
-  showLoader();
-
+  showLoader(); // Показуємо лоадер
   try {
     const response = await fetch("./fish.json");
     if (!response.ok) throw new Error("Не вдалося завантажити JSON файл");
@@ -34,7 +24,7 @@ async function fetchFishData() {
   } catch (error) {
     console.error("Помилка завантаження даних:", error);
   } finally {
-    hideLoader();
+    hideLoader(); // Приховуємо лоадер
   }
 }
 
@@ -88,12 +78,10 @@ function createFishTypeBox(fish) {
 function displayFishBox(fish) {
   showLoader();
   hideFishTypeBoxes();
-  hideSearchInput(); // Приховуємо пошуковий рядок
   fishBoxContainer.innerHTML = "";
 
   const header = createHeader(fish.className, () => {
     showFishTypeBoxes();
-    showSearchInput(); // Показуємо пошуковий рядок
     history.pushState({}, "", "/");
   });
 
@@ -157,28 +145,12 @@ function displayFishItemBox(item, parentFish) {
   const detailsContainer = document.createElement("div");
   detailsContainer.classList.add("fish_item_details");
 
-  const detailsImgContainer = document.createElement("div");
-  detailsImgContainer.classList.add("fish_item_img_details");
+  const img = document.createElement("img");
+  img.src = item.image || (item.images && item.images[0]?.src);
+  img.alt = item.title;
+  img.classList.add("fish_item_details_image");
+  detailsContainer.appendChild(img);
 
-  // Якщо є кілька зображень, додаємо всі
-  if (item.images && item.images.length > 1) {
-    item.images.forEach((image) => {
-      const img = document.createElement("img");
-      img.src = image.src;
-      img.alt = image.alt || item.title;
-      img.classList.add("fish_item_details_image");
-      detailsImgContainer.appendChild(img);
-    });
-  } else {
-    // Якщо зображення одне, додаємо одне
-    const img = document.createElement("img");
-    img.src = item.image || (item.images && item.images[0]?.src);
-    img.alt = item.title;
-    img.classList.add("fish_item_details_image");
-    detailsImgContainer.appendChild(img);
-  }
-
-  detailsContainer.appendChild(detailsImgContainer);
   const description = document.createElement("p");
   description.textContent = item.description;
   description.classList.add("fish_item_details_description");
@@ -208,7 +180,16 @@ function createHeader(titleText, backButtonCallback) {
   return headerContainer;
 }
 
-//* Показ/приховування елементів
+//* Функції для управління лоадером
+function showLoader() {
+  loader.style.display = "flex";
+}
+
+function hideLoader() {
+  loader.style.display = "none";
+}
+
+//* Показ/приховування Fish_type_box
 function showFishTypeBoxes() {
   fishTypeBoxesContainer.style.display = "flex";
   fishBoxContainer.innerHTML = "";
@@ -218,24 +199,5 @@ function hideFishTypeBoxes() {
   fishTypeBoxesContainer.style.display = "none";
 }
 
-function showSearchInput() {
-  searchInput.style.display = "block";
-}
-
-function hideSearchInput() {
-  searchInput.style.display = "none";
-}
-
 //* Ініціалізація
 fetchFishData();
-
-//* Відновлення стану при переходах
-window.addEventListener("popstate", (event) => {
-  if (!event.state || !event.state.fishId) {
-    showFishTypeBoxes();
-    showSearchInput();
-  } else {
-    const fish = cachedFishData.find((f) => f.id === event.state.fishId);
-    if (fish) displayFishBox(fish);
-  }
-});
