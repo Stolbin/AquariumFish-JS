@@ -7,9 +7,6 @@ const fishBoxContainer = document.querySelector(".fish_box_container");
 //* Контейнер для рендерингу Fish_type_box
 const fishTypeBoxesContainer = document.createElement("div");
 fishTypeBoxesContainer.classList.add("fish_type_boxes_container");
-const fishSearchBoxesContainer = document.createElement("div");
-fishSearchBoxesContainer.classList.add("fish_search_boxes_container");
-mainContainer.appendChild(fishSearchBoxesContainer);
 mainContainer.appendChild(fishTypeBoxesContainer);
 
 //* Кеш даних
