@@ -76,6 +76,7 @@ typings/
 # JS
 test
 *test.js
+*test_show-hide_elements.js
 
 # HTML
 *test.html
