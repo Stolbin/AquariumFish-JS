@@ -21,7 +21,8 @@
 
 .fish_type_boxes_container,
 .fish_box_container,
-.fish_items_container {
+.fish_items_container,
+.fish_search_boxes_container {
   width: 1200px;
   height: auto;
   display: flex;
@@ -98,6 +99,7 @@
   object-fit: cover;
   transform: scale(1);
   transition: transform 0.3s ease;
+  cursor: pointer;
   &:hover {
     transform: scale(1.05);
   }
