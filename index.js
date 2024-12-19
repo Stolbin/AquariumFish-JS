@@ -1,14 +1,8 @@
-import {
-  showLoader,
-  hideLoader,
-  showSearchInput, // Використовується з файлу show-hide_elements.js
-  hideSearchInput,
-} from "./js/show-hide_elements.js";
+import { showLoader, hideLoader } from "./js/show-hide_elements.js";
 
 //* Основні елементи DOM
 const mainContainer = document.querySelector("main");
 const fishBoxContainer = document.querySelector(".fish_box_container");
-const searchInput = document.querySelector(".search_input");
 
 //* Контейнер для рендерингу Fish_type_box
 const fishTypeBoxesContainer = document.createElement("div");
@@ -28,7 +22,7 @@ async function fetchFishData() {
     const response = await fetch("./json/fish.json");
     if (!response.ok) throw new Error("Не вдалося завантажити JSON файл");
     const fishData = await response.json();
-    cachedFishData = fishData; // Кешуємо дані
+    cachedFishData = fishData;
     generateFishBoxes(fishData);
   } catch (error) {
     console.error("Помилка завантаження даних:", error);
@@ -39,7 +33,7 @@ async function fetchFishData() {
 
 //* Генерація Fish_type_box
 function generateFishBoxes(fishData) {
-  fishTypeBoxesContainer.innerHTML = ""; // Очищення контейнера
+  fishTypeBoxesContainer.innerHTML = "";
   const fragment = document.createDocumentFragment();
 
   fishData.forEach((fish) => {
@@ -86,12 +80,10 @@ function createFishTypeBox(fish) {
 function displayFishBox(fish) {
   showLoader();
   hideFishTypeBoxes();
-  hideSearchInput();
   fishBoxContainer.innerHTML = "";
 
   const header = createHeader(fish.className, () => {
     showFishTypeBoxes();
-    showSearchInput();
     history.pushState({}, "", "/");
   });
 
@@ -161,11 +153,9 @@ function displayFishItemBox(item, parentFish) {
   const detailsContainer = document.createElement("div");
   detailsContainer.classList.add("fish_item_details");
 
-  // Створюємо контейнер для всіх картинок
   const imgDetailsContainer = document.createElement("div");
   imgDetailsContainer.classList.add("fish_item_img_details");
 
-  // Перевірка, чи є кілька зображень
   if (item.images && item.images.length > 0) {
     item.images.forEach((image) => {
       const img = document.createElement("img");
@@ -190,72 +180,8 @@ function displayFishItemBox(item, parentFish) {
   detailsContainer.appendChild(description);
 
   fishBoxContainer.appendChild(detailsContainer);
-  fishSearchBoxesContainer.style.display = "none";
   hideLoader();
 }
-
-// //* Пошук
-// searchInput.addEventListener("input", () => {
-//   const query = searchInput.value.toLowerCase();
-//   fishTypeBoxesContainer.innerHTML = "";
-//   fishSearchBoxesContainer.innerHTML = "";
-//   fishSearchBoxesContainer.style.marginTop = "16px";
-
-//   if (fishSearchBoxesContainer.innerHTML.trim()) {
-//     fishSearchBoxesContainer.style.display = "flex";
-//   }
-
-//   if (!query) {
-//     generateFishBoxes(cachedFishData);
-//     fishSearchBoxesContainer.style.marginTop = "0";
-//     fishSearchBoxesContainer.style.display = "none";
-//     return;
-//   }
-
-//   const fragment = document.createDocumentFragment();
-//   cachedFishData.forEach((fish) => {
-//     fish.items.forEach((item) => {
-//       if (item.title.toLowerCase().includes(query)) {
-//         const itemBox = createFishItemBox(item, fish);
-//         fragment.appendChild(itemBox);
-//       }
-//     });
-//   });
-
-//   fishSearchBoxesContainer.appendChild(fragment);
-// });
-
-searchInput.addEventListener("input", () => {
-  const query = searchInput.value.toLowerCase();
-  fishSearchBoxesContainer.innerHTML = ""; // Очищаємо контейнер для результатів пошуку
-
-  if (!query) {
-    // Якщо запит порожній, відновлюємо відображення всіх елементів
-    fishSearchBoxesContainer.style.marginTop = "0";
-    generateFishBoxes(cachedFishData); // Генеруємо всі елементи з кешу
-    return;
-  }
-
-  const fragment = document.createDocumentFragment();
-  let foundItems = false;
-
-  cachedFishData.forEach((fish) => {
-    fish.items.forEach((item) => {
-      if (item.title.toLowerCase().includes(query)) {
-        const itemBox = createFishItemBox(item, fish);
-        fragment.appendChild(itemBox);
-        foundItems = true; // Знайшли хоча б один результат
-      }
-    });
-  });
-
-  if (foundItems) {
-    fishSearchBoxesContainer.style.display = "block"; // Показуємо контейнер результатів пошуку
-    fishSearchBoxesContainer.appendChild(fragment);
-  } else {
-    fishSearchBoxesContainer.style.display = "none"; // Якщо немає результатів, ховаємо контейнер
-  }
-});
 
 //* Створення заголовка з кнопкою назад
 function createHeader(titleText, backButtonCallback) {
@@ -281,7 +207,6 @@ function createHeader(titleText, backButtonCallback) {
 function showFishTypeBoxes() {
   fishTypeBoxesContainer.style.display = "flex";
   fishBoxContainer.innerHTML = "";
-  searchInput.style.display = "block";
 }
 function hideFishTypeBoxes() {
   fishTypeBoxesContainer.style.display = "none";
@@ -301,8 +226,6 @@ window.addEventListener("popstate", (event) => {
     }
   } else {
     showFishTypeBoxes();
-    showSearchInput();
-    fishSearchBoxesContainer.style.display = "flex";
   }
 });
 
