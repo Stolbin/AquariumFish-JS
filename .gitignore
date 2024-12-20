@@ -80,6 +80,7 @@ test
 
 # JSON files directory
 json/
+*.json
 
 # HTML
 *test.html
