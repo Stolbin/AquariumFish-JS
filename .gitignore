@@ -78,6 +78,9 @@ test
 *test.js
 *test_show-hide_elements.js
 
+# JSON files directory
+json/
+
 # HTML
 *test.html
 
