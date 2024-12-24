@@ -1,4 +1,4 @@
-#Junk
+# Junk
 .DS_Store
 .vscode/
 .idea/
@@ -119,3 +119,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Config files that should not be committed
+config.js  # Do not commit this file

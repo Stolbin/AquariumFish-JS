@@ -1,3 +1,4 @@
+import { fetchFishDataFromAPI } from "./js/api.js";
 import { showLoader, hideLoader } from "./js/show-hide_elements.js";
 
 //* Основні елементи DOM
@@ -11,16 +12,16 @@ mainContainer.appendChild(fishTypeBoxesContainer);
 
 //* Кеш даних
 let cachedFishData = null;
+let currentFish = null;
+let currentItem = null;
 
-//* Завантаження JSON з файлу
+//* Завантаження даних з API
 async function fetchFishData() {
   showLoader();
   try {
-    const response = await fetch("./fish.json");
-    if (!response.ok) throw new Error("Не вдалося завантажити JSON файл");
-    const fishData = await response.json();
-    cachedFishData = fishData;
-    generateFishBoxes(fishData);
+    const fishData = await fetchFishDataFromAPI();
+    cachedFishData = fishData.record;
+    generateFishBoxes(cachedFishData);
   } catch (error) {
     console.error("Помилка завантаження даних:", error);
   } finally {
@@ -43,6 +44,8 @@ function generateFishBoxes(fishData) {
 
 //* Створення Fish_type_box
 function createFishTypeBox(fish) {
+  showLoader();
+
   const box = document.createElement("div");
   box.className = "fish_type_box";
 
@@ -66,10 +69,15 @@ function createFishTypeBox(fish) {
 
   box.addEventListener("click", (e) => {
     e.preventDefault();
-    history.pushState({ fishId: fish.id }, fish.className, `#${fish.id}`);
+    history.pushState(
+      { fishId: fish.id, source: "type" },
+      fish.className,
+      `#${fish.id}`
+    );
     displayFishBox(fish);
   });
 
+  hideLoader();
   return box;
 }
 
@@ -81,7 +89,7 @@ function displayFishBox(fish) {
 
   const header = createHeader(fish.className, () => {
     showFishTypeBoxes();
-    history.pushState({}, "", "/");
+    history.pushState({ source: "type" }, "", "/");
   });
 
   fishBoxContainer.appendChild(header);
@@ -102,10 +110,13 @@ function displayFishBox(fish) {
 
   fishBoxContainer.appendChild(itemsContainer);
   hideLoader();
+  currentFish = fish;
 }
 
 //* Створення Fish_item_box
 function createFishItemBox(item, parentFish) {
+  showLoader();
+
   const itemBox = document.createElement("div");
   itemBox.className = "fish_item_box";
 
@@ -128,21 +139,31 @@ function createFishItemBox(item, parentFish) {
 
   itemBox.addEventListener("click", (e) => {
     e.preventDefault();
-    history.pushState({ itemId: item.id }, item.title, `#${item.id}`);
+    history.pushState(
+      { itemId: item.id, parentFishId: parentFish.id, source: "item" },
+      item.title,
+      `#${item.id}`
+    );
     displayFishItemBox(item, parentFish);
   });
 
+  hideLoader();
   return itemBox;
 }
 
 //* Відображення окремого Fish_item_box
 function displayFishItemBox(item, parentFish) {
   showLoader();
+
   fishBoxContainer.innerHTML = "";
 
   const header = createHeader(item.title, () => {
     displayFishBox(parentFish);
-    history.pushState({}, "", `#${parentFish.id}`);
+    history.pushState(
+      { fishId: parentFish.id, source: "type" },
+      "",
+      `#${parentFish.id}`
+    );
   });
 
   fishBoxContainer.appendChild(header);
@@ -153,6 +174,7 @@ function displayFishItemBox(item, parentFish) {
   const imgDetailsContainer = document.createElement("div");
   imgDetailsContainer.classList.add("fish_item_img_details");
 
+  //* Перевірка наявності зображень
   if (item.images && item.images.length > 0) {
     item.images.forEach((image) => {
       const img = document.createElement("img");
@@ -177,11 +199,14 @@ function displayFishItemBox(item, parentFish) {
   detailsContainer.appendChild(description);
 
   fishBoxContainer.appendChild(detailsContainer);
+
   hideLoader();
+  currentItem = item;
 }
 
 //* Створення заголовка з кнопкою назад
 function createHeader(titleText, backButtonCallback) {
+  showLoader();
   const headerContainer = document.createElement("div");
   headerContainer.classList.add("fish_box_header");
 
@@ -197,34 +222,60 @@ function createHeader(titleText, backButtonCallback) {
   headerContainer.appendChild(backButton);
   headerContainer.appendChild(title);
 
+  hideLoader();
   return headerContainer;
 }
 
-// //* Показ/приховування
+//* Показ/приховування
 function showFishTypeBoxes() {
   fishTypeBoxesContainer.style.display = "flex";
   fishBoxContainer.innerHTML = "";
 }
+
 function hideFishTypeBoxes() {
   fishTypeBoxesContainer.style.display = "none";
 }
 
 //* Обробник події popstate
 window.addEventListener("popstate", (event) => {
-  if (event.state && event.state.fishId) {
-    const fish = cachedFishData.find((f) => f.id === event.state.fishId);
-    if (fish) {
-      displayFishBox(fish);
-    }
-  } else if (event.state && event.state.itemId) {
-    const item = findItemById(event.state.itemId);
-    if (item) {
-      displayFishItemBox(item, item.parentFish);
+  if (event.state) {
+    if (event.state.fishId) {
+      const fish = cachedFishData.find((f) => f.id === event.state.fishId);
+      if (fish) {
+        displayFishBox(fish);
+      }
+    } else if (event.state.itemId) {
+      const item = findItemById(event.state.itemId);
+      if (item) {
+        displayFishItemBox(item, item.parentFish);
+      }
+    } else if (event.state.source === "type") {
+      showFishTypeBoxes();
+    } else if (event.state.source === "item") {
+      const parentFish = cachedFishData.find(
+        (f) => f.id === event.state.parentFishId
+      );
+      if (parentFish) {
+        displayFishBox(parentFish);
+      }
+    } else {
+      showFishTypeBoxes();
     }
   } else {
     showFishTypeBoxes();
   }
 });
+
+//* Функція для знаходження елемента за ID
+function findItemById(itemId) {
+  let item = null;
+  cachedFishData.forEach((fish) => {
+    if (!item && fish.items) {
+      item = fish.items.find((i) => i.id === itemId);
+    }
+  });
+  return item;
+}
 
 //* Ініціалізація
 fetchFishData();
