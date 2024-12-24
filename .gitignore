@@ -82,8 +82,7 @@ test
 *test.html
 
 # JSON files directory
-json/
-*.json
+fish.json
 
 # dotenv environment variables file
 .env
