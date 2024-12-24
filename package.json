@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "async": "^3.2.6",
+    "dotenv": "^16.4.7"
+  }
+}
