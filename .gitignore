@@ -120,4 +120,4 @@ dist
 .tern-port
 
 # Config files that should not be committed
-config.js  # Do not commit this file
+js/config.js  # Do not commit this file
