@@ -64,6 +64,7 @@
   transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out,
     background-color 0.3s ease-in-out;
   will-change: transform, box-shadow;
+  cursor: pointer;
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
@@ -99,7 +100,6 @@
   object-fit: cover;
   transform: scale(1);
   transition: transform 0.3s ease;
-  cursor: pointer;
   &:hover {
     transform: scale(1.05);
   }
