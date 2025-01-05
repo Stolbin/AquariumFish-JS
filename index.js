@@ -15,29 +15,29 @@ let cachedFishData = null;
 let currentFish = null;
 let currentItem = null;
 
-//* Перевірка на локальну розробку
-const isLocal = window.location.hostname === "localhost";
-
-function updateHistoryState(state, title, url) {
-  if (!isLocal) {
-    history.pushState(state, title, url);
-  } else {
-    console.log("URL changes are skipped in local mode:", url);
-  }
-}
-
 //* Завантаження даних з API
 async function fetchFishData() {
   showLoader();
   try {
     const fishData = await fetchFishDataFromAPI();
     cachedFishData = fishData.record;
+    sortFishData(cachedFishData); // Сортування даних риб
     generateFishBoxes(cachedFishData);
   } catch (error) {
     console.error("Помилка завантаження даних:", error);
   } finally {
     hideLoader();
   }
+}
+
+//* Сортування риб по алфавіту
+function sortFishData(fishData) {
+  fishData.sort((a, b) => a.className.localeCompare(b.className));
+  fishData.forEach((fish) => {
+    if (fish.items && Array.isArray(fish.items)) {
+      fish.items.sort((a, b) => a.title.localeCompare(b.title));
+    }
+  });
 }
 
 //* Генерація Fish_type_box
@@ -80,7 +80,7 @@ function createFishTypeBox(fish) {
 
   box.addEventListener("click", (e) => {
     e.preventDefault();
-    updateHistoryState(
+    history.pushState(
       { fishId: fish.id, source: "type" },
       fish.className,
       `#${fish.id}`
@@ -100,7 +100,7 @@ function displayFishBox(fish) {
 
   const header = createHeader(fish.className, () => {
     showFishTypeBoxes();
-    updateHistoryState({ source: "type" }, "", isLocal ? "#" : "/");
+    history.pushState({ source: "type" }, "", "/");
   });
 
   fishBoxContainer.appendChild(header);
@@ -150,7 +150,7 @@ function createFishItemBox(item, parentFish) {
 
   itemBox.addEventListener("click", (e) => {
     e.preventDefault();
-    updateHistoryState(
+    history.pushState(
       { itemId: item.id, parentFishId: parentFish.id, source: "item" },
       item.title,
       `#${item.id}`
@@ -170,7 +170,7 @@ function displayFishItemBox(item, parentFish) {
 
   const header = createHeader(item.title, () => {
     displayFishBox(parentFish);
-    updateHistoryState(
+    history.pushState(
       { fishId: parentFish.id, source: "type" },
       "",
       `#${parentFish.id}`
@@ -262,6 +262,13 @@ window.addEventListener("popstate", (event) => {
       }
     } else if (event.state.source === "type") {
       showFishTypeBoxes();
+    } else if (event.state.source === "item") {
+      const parentFish = cachedFishData.find(
+        (f) => f.id === event.state.parentFishId
+      );
+      if (parentFish) {
+        displayFishBox(parentFish);
+      }
     } else {
       showFishTypeBoxes();
     }

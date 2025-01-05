@@ -1,8 +1,8 @@
 import { showLoader, hideLoader } from "./js/show-hide_elements.js";
 
-// Функція для завантаження даних з jsonbin.io
+//* Функція для завантаження даних з jsonbin.io
 export async function fetchFishDataFromAPI() {
-  const apiUrl = "https://api.jsonbin.io/v3/c/676a79b4acd3cb34a8bea0d3/b"; // URL вашої колекції
+  const apiUrl = "https://api.jsonbin.io/v3/c/676a79b4acd3cb34a8bea0d3/b";
   const headers = {
     "X-Master-Key":
       "$2a$10$SQEW8T5PpFfBqBSSpAibRuEvgj3XOQass9UXgxSF6KW6CuEnj3F.q",
@@ -16,7 +16,7 @@ export async function fetchFishDataFromAPI() {
     if (!response.ok)
       throw new Error(`Помилка завантаження даних: ${response.statusText}`);
     const jsonData = await response.json();
-    return jsonData.record; // jsonbin.io повертає об'єкт, де дані знаходяться у властивості `record`
+    return jsonData.record;
   } catch (error) {
     console.error("Помилка завантаження даних з jsonbin.io:", error);
     return null;
