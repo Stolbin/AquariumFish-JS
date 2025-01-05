@@ -15,6 +15,17 @@ let cachedFishData = null;
 let currentFish = null;
 let currentItem = null;
 
+//* Перевірка на локальну розробку
+const isLocal = window.location.hostname === "localhost";
+
+function updateHistoryState(state, title, url) {
+  if (!isLocal) {
+    history.pushState(state, title, url);
+  } else {
+    console.log("URL changes are skipped in local mode:", url);
+  }
+}
+
 //* Завантаження даних з API
 async function fetchFishData() {
   showLoader();
@@ -69,7 +80,7 @@ function createFishTypeBox(fish) {
 
   box.addEventListener("click", (e) => {
     e.preventDefault();
-    history.pushState(
+    updateHistoryState(
       { fishId: fish.id, source: "type" },
       fish.className,
       `#${fish.id}`
@@ -89,7 +100,7 @@ function displayFishBox(fish) {
 
   const header = createHeader(fish.className, () => {
     showFishTypeBoxes();
-    history.pushState({ source: "type" }, "", "/");
+    updateHistoryState({ source: "type" }, "", isLocal ? "#" : "/");
   });
 
   fishBoxContainer.appendChild(header);
@@ -139,7 +150,7 @@ function createFishItemBox(item, parentFish) {
 
   itemBox.addEventListener("click", (e) => {
     e.preventDefault();
-    history.pushState(
+    updateHistoryState(
       { itemId: item.id, parentFishId: parentFish.id, source: "item" },
       item.title,
       `#${item.id}`
@@ -159,7 +170,7 @@ function displayFishItemBox(item, parentFish) {
 
   const header = createHeader(item.title, () => {
     displayFishBox(parentFish);
-    history.pushState(
+    updateHistoryState(
       { fishId: parentFish.id, source: "type" },
       "",
       `#${parentFish.id}`
@@ -251,13 +262,6 @@ window.addEventListener("popstate", (event) => {
       }
     } else if (event.state.source === "type") {
       showFishTypeBoxes();
-    } else if (event.state.source === "item") {
-      const parentFish = cachedFishData.find(
-        (f) => f.id === event.state.parentFishId
-      );
-      if (parentFish) {
-        displayFishBox(parentFish);
-      }
     } else {
       showFishTypeBoxes();
     }
