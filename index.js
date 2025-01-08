@@ -1,5 +1,6 @@
 import { fetchFishDataFromAPI } from "./js/api.js";
 import { showLoader, hideLoader } from "./js/show-hide_elements.js";
+import { createImageNavigation } from "./js/imageSlider.js";
 
 //* Основні елементи DOM
 const mainContainer = document.querySelector("main");
@@ -14,6 +15,7 @@ mainContainer.appendChild(fishTypeBoxesContainer);
 let cachedFishData = null;
 let currentFish = null;
 let currentItem = null;
+let currentIndex = 0;
 
 //* Завантаження даних з API
 async function fetchFishData() {
@@ -126,8 +128,6 @@ function displayFishBox(fish) {
 
 //* Створення Fish_item_box
 function createFishItemBox(item, parentFish) {
-  showLoader();
-
   const itemBox = document.createElement("div");
   itemBox.className = "fish_item_box";
 
@@ -158,7 +158,6 @@ function createFishItemBox(item, parentFish) {
     displayFishItemBox(item, parentFish);
   });
 
-  hideLoader();
   return itemBox;
 }
 
@@ -182,27 +181,9 @@ function displayFishItemBox(item, parentFish) {
   const detailsContainer = document.createElement("div");
   detailsContainer.classList.add("fish_item_details");
 
-  const imgDetailsContainer = document.createElement("div");
-  imgDetailsContainer.classList.add("fish_item_img_details");
+  const imageBox = createImageBox(item);
 
-  //* Перевірка наявності зображень
-  if (item.images && item.images.length > 0) {
-    item.images.forEach((image) => {
-      const img = document.createElement("img");
-      img.src = image.src;
-      img.alt = image.alt || item.title;
-      img.classList.add("fish_item_details_image");
-      imgDetailsContainer.appendChild(img);
-    });
-  } else {
-    const img = document.createElement("img");
-    img.src = item.image || (item.images && item.images[0]?.src);
-    img.alt = item.title;
-    img.classList.add("fish_item_details_image");
-    imgDetailsContainer.appendChild(img);
-  }
-
-  detailsContainer.appendChild(imgDetailsContainer);
+  detailsContainer.appendChild(imageBox);
 
   const description = document.createElement("p");
   description.textContent = item.description;
@@ -215,9 +196,45 @@ function displayFishItemBox(item, parentFish) {
   currentItem = item;
 }
 
+function createImageBox(item) {
+  const imageBox = document.createElement("div");
+  imageBox.classList.add("image-box");
+
+  const mainImageContainer = document.createElement("div");
+  mainImageContainer.classList.add("main-image");
+
+  const mainImage = document.createElement("img");
+  mainImage.src = item.images[0]?.src || item.image;
+  mainImage.alt = item.images[0]?.alt || item.title;
+  mainImage.id = "displayed-image";
+  mainImageContainer.appendChild(mainImage);
+
+  let currentIndex = 0;
+
+  const { prevButton, nextButton, thumbnailStrip } = createImageNavigation(
+    mainImage,
+    item,
+    currentIndex,
+    updateDisplayedImage
+  );
+
+  //* Додаємо кнопки та стрічку мініатюр до контейнера
+  mainImageContainer.appendChild(prevButton);
+  mainImageContainer.appendChild(nextButton);
+  imageBox.appendChild(mainImageContainer);
+  imageBox.appendChild(thumbnailStrip);
+
+  return imageBox;
+}
+
+//* Функція для оновлення зображення
+function updateDisplayedImage(mainImage, newImage) {
+  mainImage.src = newImage.src;
+  mainImage.alt = newImage.alt;
+}
+
 //* Створення заголовка з кнопкою назад
 function createHeader(titleText, backButtonCallback) {
-  showLoader();
   const headerContainer = document.createElement("div");
   headerContainer.classList.add("fish_box_header");
 
@@ -233,7 +250,6 @@ function createHeader(titleText, backButtonCallback) {
   headerContainer.appendChild(backButton);
   headerContainer.appendChild(title);
 
-  hideLoader();
   return headerContainer;
 }
 
@@ -261,15 +277,6 @@ window.addEventListener("popstate", (event) => {
         displayFishItemBox(item, item.parentFish);
       }
     } else if (event.state.source === "type") {
-      showFishTypeBoxes();
-    } else if (event.state.source === "item") {
-      const parentFish = cachedFishData.find(
-        (f) => f.id === event.state.parentFishId
-      );
-      if (parentFish) {
-        displayFishBox(parentFish);
-      }
-    } else {
       showFishTypeBoxes();
     }
   } else {

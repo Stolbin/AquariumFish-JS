@@ -75,8 +75,8 @@
 }
 .fish_type_box a,
 .fish_item_box a {
-  display: block; /* Робимо блоком, щоб вся область була клікабельною */
-  text-decoration: none; /* Прибираємо підкреслення посилання */
+  display: block;
+  text-decoration: none;
   color: inherit;
 }
 
@@ -87,6 +87,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   text-align: center;
   overflow: hidden;
   border-radius: 8px;
