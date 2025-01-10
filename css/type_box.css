@@ -1,5 +1,5 @@
 .fish_box_container {
-  width: 1200px;
+  width: 100%;
   margin-top: -12px;
 }
 
@@ -23,7 +23,7 @@
 .fish_box_container,
 .fish_items_container,
 .fish_search_boxes_container {
-  width: 1200px;
+  width: 90%;
   height: auto;
   display: flex;
   flex-direction: row;
