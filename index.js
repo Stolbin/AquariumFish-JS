@@ -23,7 +23,7 @@ async function fetchFishData() {
   try {
     const fishData = await fetchFishDataFromAPI();
     cachedFishData = fishData.record;
-    sortFishData(cachedFishData); // Сортування даних риб
+    sortFishData(cachedFishData);
     generateFishBoxes(cachedFishData);
   } catch (error) {
     console.error("Помилка завантаження даних:", error);
