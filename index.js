@@ -257,7 +257,7 @@ function createHeader(titleText, backButtonCallback) {
 function showFishTypeBoxes() {
   fishTypeBoxesContainer.style.display = "flex";
   fishBoxContainer.innerHTML = "";
-  history.replaceState({ source: "type" }, "", `/index.html`);
+  history.replaceState({ source: "type" }, `/index.html`);
 }
 
 function hideFishTypeBoxes() {
@@ -265,8 +265,6 @@ function hideFishTypeBoxes() {
 }
 
 //* Обробник події popstate
-const BASE_PATH = "/AquariumFish";
-
 window.addEventListener("popstate", (event) => {
   if (event.state) {
     if (event.state.fishId) {
