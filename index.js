@@ -102,7 +102,7 @@ function displayFishBox(fish) {
 
   const header = createHeader(fish.className, () => {
     showFishTypeBoxes();
-    history.pushState({ source: "type" }, "", "/");
+    history.pushState({ source: "type" });
   });
 
   fishBoxContainer.appendChild(header);
@@ -245,7 +245,10 @@ function createHeader(titleText, backButtonCallback) {
   const backButton = document.createElement("button");
   backButton.textContent = "Назад";
   backButton.classList.add("back_button");
-  backButton.addEventListener("click", backButtonCallback);
+  backButton.addEventListener("click", () => {
+    backButtonCallback();
+    history.replaceState({ source: "type" });
+  });
 
   headerContainer.appendChild(backButton);
   headerContainer.appendChild(title);
@@ -257,7 +260,7 @@ function createHeader(titleText, backButtonCallback) {
 function showFishTypeBoxes() {
   fishTypeBoxesContainer.style.display = "flex";
   fishBoxContainer.innerHTML = "";
-  history.replaceState({ source: "type" }, `/index.html`);
+  history.replaceState({ source: "type" });
 }
 
 function hideFishTypeBoxes() {
