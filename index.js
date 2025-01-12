@@ -257,6 +257,7 @@ function createHeader(titleText, backButtonCallback) {
 function showFishTypeBoxes() {
   fishTypeBoxesContainer.style.display = "flex";
   fishBoxContainer.innerHTML = "";
+  history.replaceState({ source: "type" }, "", `/index.html`);
 }
 
 function hideFishTypeBoxes() {
@@ -280,11 +281,9 @@ window.addEventListener("popstate", (event) => {
       }
     } else if (event.state.source === "type") {
       showFishTypeBoxes();
-      history.replaceState({ source: "type" }, "", `${BASE_PATH}/index.html`);
     }
   } else {
     showFishTypeBoxes();
-    history.replaceState(null, "", `${BASE_PATH}/index.html`);
   }
 });
 
