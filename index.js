@@ -102,7 +102,7 @@ function displayFishBox(fish) {
 
   const header = createHeader(fish.className, () => {
     showFishTypeBoxes();
-    history.pushState({ source: "type" });
+    history.replaceState({ source: "type" }, "", "");
   });
 
   fishBoxContainer.appendChild(header);
@@ -124,6 +124,12 @@ function displayFishBox(fish) {
   fishBoxContainer.appendChild(itemsContainer);
   hideLoader();
   currentFish = fish;
+
+  history.replaceState(
+    { fishId: fish.id, source: "type" },
+    fish.className,
+    `#${fish.id}`
+  );
 }
 
 //* Створення Fish_item_box
@@ -169,7 +175,7 @@ function displayFishItemBox(item, parentFish) {
 
   const header = createHeader(item.title, () => {
     displayFishBox(parentFish);
-    history.pushState(
+    history.replaceState(
       { fishId: parentFish.id, source: "type" },
       "",
       `#${parentFish.id}`
@@ -194,6 +200,12 @@ function displayFishItemBox(item, parentFish) {
 
   hideLoader();
   currentItem = item;
+
+  history.replaceState(
+    { itemId: item.id, parentFishId: parentFish.id, source: "item" },
+    item.title,
+    `#${item.id}`
+  );
 }
 
 function createImageBox(item) {
@@ -218,7 +230,6 @@ function createImageBox(item) {
     updateDisplayedImage
   );
 
-  //* Додаємо кнопки та стрічку мініатюр до контейнера
   mainImageContainer.appendChild(prevButton);
   mainImageContainer.appendChild(nextButton);
   imageBox.appendChild(mainImageContainer);
@@ -233,34 +244,11 @@ function updateDisplayedImage(mainImage, newImage) {
   mainImage.alt = newImage.alt;
 }
 
-//* Створення заголовка з кнопкою назад
-function createHeader(titleText, backButtonCallback) {
-  const headerContainer = document.createElement("div");
-  headerContainer.classList.add("fish_box_header");
-
-  const title = document.createElement("h2");
-  title.textContent = titleText;
-  title.classList.add("box_title");
-
-  const backButton = document.createElement("button");
-  backButton.textContent = "Назад";
-  backButton.classList.add("back_button");
-  backButton.addEventListener("click", () => {
-    backButtonCallback();
-    history.replaceState({ source: "type" });
-  });
-
-  headerContainer.appendChild(backButton);
-  headerContainer.appendChild(title);
-
-  return headerContainer;
-}
-
 //* Показ/приховування
 function showFishTypeBoxes() {
   fishTypeBoxesContainer.style.display = "flex";
   fishBoxContainer.innerHTML = "";
-  history.replaceState({ source: "type" });
+  history.replaceState({ source: "type" }, "", "");
 }
 
 function hideFishTypeBoxes() {
@@ -287,6 +275,29 @@ window.addEventListener("popstate", (event) => {
     showFishTypeBoxes();
   }
 });
+
+//* Створення заголовка з кнопкою назад
+function createHeader(titleText, backButtonCallback) {
+  const headerContainer = document.createElement("div");
+  headerContainer.classList.add("fish_box_header");
+
+  const title = document.createElement("h2");
+  title.textContent = titleText;
+  title.classList.add("box_title");
+
+  const backButton = document.createElement("button");
+  backButton.textContent = "Назад";
+  backButton.classList.add("back_button");
+  backButton.addEventListener("click", () => {
+    backButtonCallback();
+    history.replaceState({ source: "type" }, "", "");
+  });
+
+  headerContainer.appendChild(backButton);
+  headerContainer.appendChild(title);
+
+  return headerContainer;
+}
 
 //* Функція для знаходження елемента за ID
 function findItemById(itemId) {
