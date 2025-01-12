@@ -278,9 +278,11 @@ window.addEventListener("popstate", (event) => {
       }
     } else if (event.state.source === "type") {
       showFishTypeBoxes();
+      history.replaceState({ source: "type" }, "", "/");
     }
   } else {
     showFishTypeBoxes();
+    history.replaceState(null, "", "/");
   }
 });
 
