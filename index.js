@@ -264,6 +264,8 @@ function hideFishTypeBoxes() {
 }
 
 //* Обробник події popstate
+const BASE_PATH = "/AquariumFish";
+
 window.addEventListener("popstate", (event) => {
   if (event.state) {
     if (event.state.fishId) {
@@ -278,11 +280,11 @@ window.addEventListener("popstate", (event) => {
       }
     } else if (event.state.source === "type") {
       showFishTypeBoxes();
-      history.replaceState({ source: "type" }, "", "/index.html");
+      history.replaceState({ source: "type" }, "", `${BASE_PATH}/index.html`);
     }
   } else {
     showFishTypeBoxes();
-    history.replaceState(null, "", "/index.html");
+    history.replaceState(null, "", `${BASE_PATH}/index.html`);
   }
 });
 
