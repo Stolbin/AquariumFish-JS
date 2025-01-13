@@ -4,6 +4,35 @@
   color: rgb(37, 30, 30);
 }
 
+.image-box-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 60px;
+}
+
+.main-description {
+  width: calc(100% - 540px);
+  margin: 14px 0;
+}
+
+.main-description_title {
+  font-size: 26px;
+  text-align: start;
+}
+
+.main-description_text {
+  width: 60%;
+  font-size: 18px;
+  text-align: end;
+}
+.description-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 8px 0;
+  gap: 10px;
+}
+
 .fish_item_box_description {
   font-family: "Oswald", sans-serif;
   font-size: 14px;

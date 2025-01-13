@@ -209,6 +209,11 @@ function displayFishItemBox(item, parentFish) {
 }
 
 function createImageBox(item) {
+  // Основний контейнер
+  const wrapper = document.createElement("div");
+  wrapper.classList.add("image-box-wrapper");
+
+  // Існуючий контейнер для зображень
   const imageBox = document.createElement("div");
   imageBox.classList.add("image-box");
 
@@ -235,7 +240,46 @@ function createImageBox(item) {
   imageBox.appendChild(mainImageContainer);
   imageBox.appendChild(thumbnailStrip);
 
-  return imageBox;
+  // Новий контейнер для опису
+  const mainDescription = document.createElement("div");
+  mainDescription.classList.add("main-description");
+
+  // Дані для наповнення
+  const descriptions = [
+    { title: "Регіон проживання:", value: item.region },
+    { title: "Розмір:", value: item.size ? `${item.size}см` : null },
+    {
+      title: "Температура:",
+      value: item.temperature ? `${item.temperature}°C` : null,
+    },
+    { title: "pH:", value: item.pH ? `${item.pH}pH` : null },
+    { title: "dGH:", value: item.dGH ? `${item.dGH}°` : null },
+  ];
+
+  descriptions.forEach((desc) => {
+    if (!desc.value) return;
+
+    const descriptionBox = document.createElement("div");
+    descriptionBox.classList.add("description-box");
+
+    const heading = document.createElement("h3");
+    heading.classList.add("main-description_title");
+    heading.textContent = desc.title;
+
+    const paragraph = document.createElement("p");
+    paragraph.classList.add("main-description_text");
+    paragraph.textContent = desc.value;
+
+    descriptionBox.appendChild(heading);
+    descriptionBox.appendChild(paragraph);
+    mainDescription.appendChild(descriptionBox);
+  });
+
+  // Додавання обох контейнерів до обгортки
+  wrapper.appendChild(imageBox);
+  wrapper.appendChild(mainDescription);
+
+  return wrapper;
 }
 
 //* Функція для оновлення зображення
