@@ -10,13 +10,13 @@
 }
 
 .main-description_title {
-  font-size: 26px;
+  font-size: 22px;
   text-align: start;
 }
 
 .main-description_text {
   width: 60%;
-  font-size: 18px;
+  font-size: 16px;
   text-align: end;
 }
 
@@ -29,13 +29,6 @@
   gap: 10px;
 }
 
-.fish_item_box_description {
-  font-family: "Oswald", sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  font-style: italic;
-}
-
 .fish_item_img_details {
   display: flex;
   flex-direction: row;
@@ -44,6 +37,19 @@
   align-items: center;
   justify-content: center;
   margin-bottom: 14px;
+}
+
+selector {
+  text-indent: value;
+}
+
+.fish_item_details_description {
+  font-size: inherit;
+  font-weight: 400;
+  line-height: 1.75;
+  margin: 0 0 24px;
+  overflow-wrap: break-word;
+  text-indent: 30px;
 }
 
 .fish_item_details_image {
