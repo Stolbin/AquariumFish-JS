@@ -3,6 +3,7 @@
   height: 40px;
   padding: 10px 0;
   text-align: center;
+  color: rgb(121, 65, 13);
   border-bottom: 1px solid #10559b;
   background: linear-gradient(to top, #b2dffb 60%, #a0ddda 100%);
   z-index: 9999;

@@ -1,17 +1,11 @@
-.fish_item_box_title {
-  font-size: 18px;
-  font-weight: 700;
-  color: rgb(37, 30, 30);
-}
-
 .image-box-wrapper {
   display: flex;
   flex-direction: row;
-  gap: 60px;
+  gap: calc(20vw);
 }
 
 .main-description {
-  width: calc(100% - 540px);
+  width: calc(100% - (480px + 20vw));
   margin: 14px 0;
 }
 
@@ -29,6 +23,7 @@
 .description-box {
   display: flex;
   flex-direction: row;
+  align-items: flex-end;
   justify-content: space-between;
   padding: 8px 0;
   gap: 10px;
