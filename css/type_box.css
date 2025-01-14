@@ -1,4 +1,4 @@
-.box_title {
+.item-title-box {
   font-size: 30px;
   font-family: "Raleway", sans-serif;
   color: rgb(37, 30, 30);
@@ -103,6 +103,8 @@
 
 .fish_type_linkText,
 .fish_item_linkText {
+  display: flex;
+  flex-direction: column;
   font-size: 14px;
   font-weight: 600;
   text-overflow: ellipsis;
