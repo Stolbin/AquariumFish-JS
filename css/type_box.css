@@ -1,12 +1,5 @@
-.item-title-box {
-  font-size: 30px;
-  font-family: "Raleway", sans-serif;
-  color: rgb(37, 30, 30);
-}
-
 .fish_box_container {
   width: 100%;
-  margin-top: -12px;
 }
 
 .fish_box_header {
@@ -17,6 +10,28 @@
   gap: 12px;
 }
 
+.fish-title-box,
+.item-title-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fish-title,
+.item-title,
+.item-title_number {
+  font-size: 18px;
+  font-family: "Raleway", sans-serif;
+  line-height: 1.2;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+  color: rgb(37, 30, 30);
+}
+
+.item-title_number {
+  font-style: italic;
+  color: rgb(82, 110, 22);
+}
+
 .fish_type_boxes_container,
 .fish_box_container,
 .fish_items_container {
@@ -25,7 +40,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 16px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
@@ -34,17 +49,29 @@
 }
 
 .img_fish {
-  width: 180px;
-  height: 120px;
+  width: 130px;
+  height: 80px;
   object-fit: cover;
+}
+
+.item-number {
+  z-index: 999;
+  font-size: 10px;
+  position: absolute;
+  top: 3%;
+  right: 3%;
+  color: rgb(87, 16, 16);
+  background: rgba(255, 255, 255, 0.6);
+  padding: 0 2px;
+  border-radius: 8px;
 }
 
 .fish_type_box,
 .fish_item_box {
   position: relative;
-  width: 210px;
-  height: 200px;
-  padding-top: 5px;
+  width: 140px;
+  height: auto;
+  padding: 5px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -77,8 +104,8 @@
 
 .fish_type_image_container,
 .fish_item_image_container {
-  width: 200px;
-  height: 130px;
+  width: 140px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -105,7 +132,7 @@
 .fish_item_linkText {
   display: flex;
   flex-direction: column;
-  font-size: 14px;
+  font-size: 10px;
   font-weight: 600;
   text-overflow: ellipsis;
   word-break: break-word;
@@ -115,5 +142,61 @@
   color: black;
   position: relative;
   transition: color 0.3s ease;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   text-decoration: none;
+}
+
+@media (min-width: 440px) {
+  .fish_box_container {
+    margin-top: -12px;
+  }
+
+  .fish_type_boxes_container,
+  .fish_box_container,
+  .fish_items_container {
+    gap: 16px;
+  }
+
+  .fish_type_box,
+  .fish_item_box {
+    width: 210px;
+    height: 200px;
+    padding-top: 5px;
+  }
+
+  .fish_type_image_container,
+  .fish_item_image_container {
+    width: 200px;
+    height: 130px;
+  }
+
+  .fish_type_linkText,
+  .fish_item_linkText {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 600px) {
+  .fish-title,
+  .item-title,
+  .item-title_number {
+    font-size: 20px;
+  }
+  .item-number {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 768px) {
+  .fish-title-box,
+  .item-title-box {
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  .fish-title,
+  .item-title,
+  .item-title_number {
+    font-size: 24px;
+  }
 }

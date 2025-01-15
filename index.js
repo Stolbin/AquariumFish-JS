@@ -1,23 +1,20 @@
 import { fetchFishDataFromAPI } from "./js/api.js";
 import { showLoader, hideLoader } from "./js/show-hide_elements.js";
 import { createImageNavigation } from "./js/imageSlider.js";
+import { createHeaderFish, createHeaderItem } from "./js/headerTitle.js";
 
-// Основні елементи DOM
 const mainContainer = document.querySelector("main");
 const fishBoxContainer = document.querySelector(".fish_box_container");
 
-// Контейнер для рендерингу Fish_type_box
 const fishTypeBoxesContainer = document.createElement("div");
 fishTypeBoxesContainer.classList.add("fish_type_boxes_container");
 mainContainer.appendChild(fishTypeBoxesContainer);
 
-// Кеш даних
 let cachedFishData = null;
 let currentFish = null;
 let currentItem = null;
 let currentIndex = 0;
 
-// Завантаження даних з API
 async function fetchFishData() {
   showLoader();
   try {
@@ -32,7 +29,6 @@ async function fetchFishData() {
   }
 }
 
-// Сортування риб по алфавіту
 function sortFishData(fishData) {
   fishData.sort((a, b) => {
     const nameA = a.classNameUA || "";
@@ -51,7 +47,6 @@ function sortFishData(fishData) {
   });
 }
 
-// Генерація Fish_type_box
 function generateFishBoxes(fishData) {
   fishTypeBoxesContainer.innerHTML = "";
   const fragment = document.createDocumentFragment();
@@ -64,7 +59,6 @@ function generateFishBoxes(fishData) {
   fishTypeBoxesContainer.appendChild(fragment);
 }
 
-// Створення Fish_type_box
 function createFishTypeBox(fish) {
   showLoader();
 
@@ -85,11 +79,10 @@ function createFishTypeBox(fish) {
   link.href = `#${fish.id}`;
   link.classList.add("fish_type_linkText");
 
-  // Форматуємо заголовок, розділяючи UA та EN на окремі елементи p
   const titleUA = document.createElement("p");
-  titleUA.textContent = fish.classNameUA || ""; // UA частина
+  titleUA.textContent = fish.classNameUA || "";
   const titleEN = document.createElement("p");
-  titleEN.textContent = fish.classNameEN || ""; // EN частина
+  titleEN.textContent = `(${fish.classNameEN})` || "";
 
   link.appendChild(titleUA);
   link.appendChild(titleEN);
@@ -111,13 +104,12 @@ function createFishTypeBox(fish) {
   return box;
 }
 
-// Відображення Fish_box
 function displayFishBox(fish) {
   showLoader();
   hideFishTypeBoxes();
   fishBoxContainer.innerHTML = "";
 
-  const header = createHeader(fish.classNameUA, () => {
+  const header = createHeaderFish(fish, () => {
     showFishTypeBoxes();
     history.replaceState({ source: "type" }, "", "");
   });
@@ -149,36 +141,6 @@ function displayFishBox(fish) {
   );
 }
 
-// Створення заголовка
-function createHeader(title, onBackClick) {
-  const header = document.createElement("header");
-  header.classList.add("fish_box_header");
-
-  const backButton = document.createElement("button");
-  backButton.textContent = "Назад";
-  backButton.classList.add("back_button");
-  backButton.addEventListener("click", onBackClick);
-
-  const heading = document.createElement("h2");
-  heading.textContent = formatTitle(title, title); // Форматуємо заголовок
-  heading.classList.add("item-title-box"); // Додаємо клас до h2
-
-  header.appendChild(backButton);
-  header.appendChild(heading);
-
-  return header;
-}
-
-// Форматування заголовка (поєднуємо titleUA і titleEN)
-function formatTitle(titleUA, titleEN) {
-  let title = titleUA || "";
-  if (titleEN && titleEN !== titleUA) {
-    title += ` (${titleEN})`;
-  }
-  return title;
-}
-
-// Створення Fish_item_box
 function createFishItemBox(item, parentFish) {
   const itemBox = document.createElement("div");
   itemBox.className = "fish_item_box";
@@ -192,15 +154,19 @@ function createFishItemBox(item, parentFish) {
   img.classList.add("fish_item_image");
   imageContainer.appendChild(img);
 
+  const headerTitleСlassification = document.createElement("h2");
+  headerTitleСlassification.textContent = item.classification || "";
+  headerTitleСlassification.classList.add("item-number");
+  imageContainer.appendChild(headerTitleСlassification);
+
   const link = document.createElement("a");
   link.href = `#${item.id}`;
   link.classList.add("fish_item_linkText");
 
-  // Форматуємо заголовок, розділяючи UA та EN на окремі елементи p
   const titleUA = document.createElement("p");
-  titleUA.textContent = item.titleUA || ""; // UA частина
+  titleUA.textContent = item.titleUA || "";
   const titleEN = document.createElement("p");
-  titleEN.textContent = item.titleEN || ""; // EN частина
+  titleEN.textContent = `(${item.titleEN})` || "";
 
   link.appendChild(titleUA);
   link.appendChild(titleEN);
@@ -221,13 +187,12 @@ function createFishItemBox(item, parentFish) {
   return itemBox;
 }
 
-// Відображення окремого Fish_item_box
 function displayFishItemBox(item, parentFish) {
   showLoader();
 
   fishBoxContainer.innerHTML = "";
 
-  const header = createHeader(item.titleUA, () => {
+  const header = createHeaderItem(item, () => {
     displayFishBox(parentFish);
     history.replaceState(
       { fishId: parentFish.id, source: "type" },
@@ -296,7 +261,6 @@ function createImageBox(item) {
   mainDescription.classList.add("main-description");
 
   const descriptions = [
-    { title: "Номерна класифікація:", value: item.classification || null },
     { title: "Регіон проживання:", value: item.region || null },
     { title: "Розмір:", value: item.size ? `${item.size}см` : null },
     {
@@ -332,13 +296,11 @@ function createImageBox(item) {
   return wrapper;
 }
 
-// Функція для оновлення зображення
 function updateDisplayedImage(mainImage, newImage) {
   mainImage.src = newImage.src;
   mainImage.alt = newImage.alt;
 }
 
-// Показ/приховування
 function showFishTypeBoxes() {
   fishTypeBoxesContainer.style.display = "flex";
   fishBoxContainer.innerHTML = "";
@@ -349,7 +311,6 @@ function hideFishTypeBoxes() {
   fishTypeBoxesContainer.style.display = "none";
 }
 
-// Обробник події popstate
 window.addEventListener("popstate", (event) => {
   if (event.state) {
     if (event.state.fishId) {
@@ -370,5 +331,4 @@ window.addEventListener("popstate", (event) => {
   }
 });
 
-// Початкове завантаження
 fetchFishData();

@@ -4,10 +4,20 @@ export function createImageNavigation(
   currentIndex,
   updateDisplayedImage
 ) {
-  //* Кнопка для попереднього зображення
   const prevButton = document.createElement("button");
   prevButton.classList.add("prev-button");
-  prevButton.innerHTML = "&#11164;";
+
+  const prevArrow = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "svg"
+  );
+  prevArrow.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+  prevArrow.setAttribute("viewBox", "0 0 24 24");
+  prevArrow.setAttribute("width", "24");
+  prevArrow.setAttribute("height", "24");
+  prevArrow.innerHTML = `<path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
+
+  prevButton.appendChild(prevArrow);
   prevButton.addEventListener("click", () => {
     currentIndex = (currentIndex - 1 + item.images.length) % item.images.length;
     updateThumbnails(thumbnailStrip, currentIndex);
@@ -22,7 +32,18 @@ export function createImageNavigation(
   //* Кнопка для наступного зображення
   const nextButton = document.createElement("button");
   nextButton.classList.add("next-button");
-  nextButton.innerHTML = "&#11166;";
+
+  const nextArrow = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "svg"
+  );
+  nextArrow.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+  nextArrow.setAttribute("viewBox", "0 0 24 24");
+  nextArrow.setAttribute("width", "24");
+  nextArrow.setAttribute("height", "24");
+  nextArrow.innerHTML = `<path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`;
+
+  nextButton.appendChild(nextArrow);
   nextButton.addEventListener("click", () => {
     currentIndex = (currentIndex + 1) % item.images.length;
     updateThumbnails(thumbnailStrip, currentIndex);

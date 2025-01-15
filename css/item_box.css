@@ -1,32 +1,29 @@
 .image-box-wrapper {
   display: flex;
-  flex-direction: row;
-  gap: calc(20vw);
+  flex-direction: column;
 }
 
 .main-description {
-  width: calc(100% - (480px + 20vw));
-  margin: 14px 0;
-}
-
-.main-description_title {
-  font-size: 22px;
-  text-align: start;
-}
-
-.main-description_text {
-  width: 60%;
-  font-size: 16px;
-  text-align: end;
+  width: 100%;
+  margin-bottom: 6px;
 }
 
 .description-box {
   display: flex;
-  flex-direction: row;
-  align-items: flex-end;
+  flex-direction: column;
   justify-content: space-between;
   padding: 8px 0;
-  gap: 10px;
+  gap: 4px;
+}
+
+.main-description_title {
+  width: 220px;
+  font-size: 12px;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.main-description_text {
+  font-size: 10px;
 }
 
 .fish_item_img_details {
@@ -44,7 +41,7 @@ selector {
 }
 
 .fish_item_details_description {
-  font-size: inherit;
+  font-size: 12px;
   font-weight: 400;
   line-height: 1.75;
   margin: 0 0 24px;
@@ -67,15 +64,14 @@ selector {
 }
 
 .image-box {
-  width: 480px;
-  height: 400px;
+  width: calc(100% - 10px);
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
   object-fit: cover;
-  margin-bottom: 10px;
   overflow: hidden;
 }
 
@@ -147,20 +143,17 @@ selector {
 }
 
 .thumbnail-strip {
-  width: 480px;
-  height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5px;
   margin-top: 10px;
   object-fit: cover;
   overflow: hidden;
 }
 
 .thumbnail {
-  width: 70px;
-  height: 50px;
+  width: 45px;
+  height: 30px;
   cursor: pointer;
   margin: 0;
   border: 2px solid transparent;
@@ -182,4 +175,119 @@ selector {
   border-radius: 4px;
   border: none;
   transition: all 0.3s ease-in-out;
+}
+
+@media (min-width: 600px) {
+  .main-description_title {
+    font-size: 22px;
+    text-align: start;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+  }
+
+  .main-description_text {
+    width: 60%;
+    font-size: 16px;
+  }
+
+  .fish_item_details_description {
+    font-size: inherit;
+    font-weight: 400;
+    line-height: 1.75;
+    margin: 0 0 24px;
+    overflow-wrap: break-word;
+    text-indent: 30px;
+  }
+
+  .fish_item_img_details {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+
+  .image-box {
+    margin-bottom: 10px;
+  }
+
+  .main-image {
+    width: 480px;
+    height: 300px;
+  }
+
+  .thumbnail-strip {
+    width: 480px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+    object-fit: cover;
+    overflow: hidden;
+  }
+
+  .thumbnail {
+    width: 70px;
+    height: 50px;
+    cursor: pointer;
+    margin: 0;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+    transform: scale(1);
+    border-radius: 8px;
+    filter: blur(1px);
+    transition: all 0.3s ease-in-out;
+  }
+
+  .thumbnail:hover {
+    border: 1px solid #876130;
+  }
+}
+
+@media (min-width: 1200px) {
+  .image-box {
+    width: 480px;
+    height: 400px;
+  }
+
+  .image-box-wrapper {
+    flex-direction: row;
+    gap: 30px;
+  }
+
+  .main-description {
+    width: calc(100% - 480px);
+    margin: 14px 0;
+  }
+}
+
+@media (min-width: 1400px) {
+  .image-box-wrapper {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .main-description {
+    width: calc(100% - (480px + 5%));
+    margin: 14px 0;
+  }
+
+  .description-box {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .main-description_title {
+    text-align: end;
+  }
+
+  .main-description_text {
+    width: 450px;
+    text-align: end;
+  }
 }
