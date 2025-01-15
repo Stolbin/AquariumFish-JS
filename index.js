@@ -154,10 +154,12 @@ function createFishItemBox(item, parentFish) {
   img.classList.add("fish_item_image");
   imageContainer.appendChild(img);
 
-  const headerTitleСlassification = document.createElement("h2");
-  headerTitleСlassification.textContent = item.classification || "";
-  headerTitleСlassification.classList.add("item-number");
-  imageContainer.appendChild(headerTitleСlassification);
+  if (item.classification) {
+    const headerTitleСlassification = document.createElement("h2");
+    headerTitleСlassification.textContent = item.classification;
+    headerTitleСlassification.classList.add("item-number");
+    imageContainer.appendChild(headerTitleСlassification);
+  }
 
   const link = document.createElement("a");
   link.href = `#${item.id}`;
