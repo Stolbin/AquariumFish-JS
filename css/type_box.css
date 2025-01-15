@@ -154,7 +154,7 @@
   .fish_type_boxes_container,
   .fish_box_container,
   .fish_items_container {
-    gap: 16px;
+    gap: 12px;
   }
 
   .fish_type_box,
