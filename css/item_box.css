@@ -11,7 +11,7 @@
 .description-box {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 8px 0;
   gap: 4px;
 }
@@ -19,11 +19,12 @@
 .main-description_title {
   width: 220px;
   font-size: 12px;
+  font-family: "Oswald", arial narrow, sans-serif;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
 }
 
 .main-description_text {
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .fish_item_img_details {
@@ -272,6 +273,11 @@ selector {
     width: calc(100% - 480px);
     margin: 14px 0;
   }
+
+  .main-description_text {
+    width: 65%;
+    font-size: 18px;
+  }
 }
 
 @media (min-width: 1400px) {
@@ -286,8 +292,9 @@ selector {
   }
 
   .description-box {
+    display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: baseline;
     justify-content: flex-end;
     gap: 10px;
   }
