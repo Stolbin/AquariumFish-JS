@@ -35,5 +35,10 @@
       <div class="spinner"></div>
     </div>
     <script type="module" src="./index.js"></script>
+    <script>
+      const isGitHubPages = window.location.hostname === "stolbin.github.io";
+      const basePath = isGitHubPages ? "/AquariumFish/" : "/";
+      document.write(`<base href="${basePath}">`);
+    </script>
   </body>
 </html>
