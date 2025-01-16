@@ -314,21 +314,29 @@ function hideFishTypeBoxes() {
 }
 
 window.addEventListener("popstate", (event) => {
-  if (event.state) {
-    if (event.state.fishId) {
-      const fish = cachedFishData.find((f) => f.id === event.state.fishId);
-      if (fish) {
-        displayFishBox(fish);
-      }
-    } else if (event.state.itemId) {
-      const item = findItemById(event.state.itemId);
-      if (item) {
-        displayFishItemBox(item, item.parentFish);
-      }
-    } else if (event.state.source === "type") {
-      showFishTypeBoxes();
+  const state = event.state;
+
+  if (!state) {
+    history.replaceState(null, "", "/");
+    return showFishTypeBoxes();
+  }
+
+  if (state.fishId) {
+    const fish = cachedFishData.find((f) => f.id === state.fishId);
+    if (fish) {
+      return displayFishBox(fish);
     }
-  } else {
+  }
+
+  if (state.itemId) {
+    const item = findItemById(state.itemId);
+    if (item) {
+      return displayFishItemBox(item, item.parentFish);
+    }
+  }
+
+  if (state.source === "type") {
+    history.replaceState(null, "", "/");
     showFishTypeBoxes();
   }
 });

@@ -5,7 +5,12 @@ export function createHeaderFish(fish, onBackClick) {
   const backButton = document.createElement("button");
   backButton.textContent = "Назад";
   backButton.classList.add("back_button");
-  backButton.addEventListener("click", onBackClick);
+  backButton.addEventListener("click", () => {
+    history.replaceState(null, "", "/");
+    if (typeof onBackClick === "function") {
+      onBackClick();
+    }
+  });
   fishHeader.appendChild(backButton);
 
   const fishTitleBox = document.createElement("div");
@@ -32,7 +37,12 @@ export function createHeaderItem(item, onBackClick) {
   const backButton = document.createElement("button");
   backButton.textContent = "Назад";
   backButton.classList.add("back_button");
-  backButton.addEventListener("click", onBackClick);
+  backButton.addEventListener("click", () => {
+    history.replaceState(null, "", "/");
+    if (typeof onBackClick === "function") {
+      onBackClick();
+    }
+  });
   itemFishHeader.appendChild(backButton);
 
   const itemTitleBox = document.createElement("div");
