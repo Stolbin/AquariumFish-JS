@@ -22,3 +22,9 @@ main {
     padding-top: 90px;
   }
 }
+
+@media (min-width: 1400px) {
+  main {
+    width: 1320px;
+  }
+}
