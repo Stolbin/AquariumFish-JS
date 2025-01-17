@@ -390,7 +390,7 @@ window.addEventListener("popstate", (event) => {
   const basePath = document.querySelector("base").getAttribute("href") || "/";
   const state = event.state;
   if (!state) {
-    history.replaceState(null, "", `${basePath}`);
+    history.replaceState(null, "", `/`);
     return showFishTypeBoxes();
   }
   if (state.fishId) {
@@ -408,7 +408,7 @@ window.addEventListener("popstate", (event) => {
   }
 
   if (state.source === "type") {
-    history.replaceState(null, "", `${basePath}`);
+    history.replaceState(null, "", `/`);
     showFishTypeBoxes();
   }
 });
