@@ -389,13 +389,16 @@ window.addEventListener("popstate", function (e) {
 window.addEventListener("popstate", (event) => {
   const basePath = document.querySelector("base").getAttribute("href") || "/";
   const state = event.state;
+
   if (!state) {
-    history.replaceState(null, "", `/`);
+    history.replaceState(null, "", basePath); // Використовуємо basePath
     return showFishTypeBoxes();
   }
+
   if (state.fishId) {
     const fish = cachedFishData.find((f) => f.id === state.fishId);
     if (fish) {
+      history.replaceState(state, "", `${basePath}fish/${state.fishId}`); // Використовуємо basePath
       return displayFishBox(fish);
     }
   }
@@ -403,12 +406,13 @@ window.addEventListener("popstate", (event) => {
   if (state.itemId) {
     const item = findItemById(state.itemId);
     if (item) {
+      history.replaceState(state, "", `${basePath}item/${state.itemId}`); // Використовуємо basePath
       return displayFishItemBox(item, item.parentFish);
     }
   }
 
   if (state.source === "type") {
-    history.replaceState(null, "", `/`);
+    history.replaceState(null, "", basePath); // Використовуємо basePath
     showFishTypeBoxes();
   }
 });
