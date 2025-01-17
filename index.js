@@ -386,17 +386,21 @@ window.addEventListener("popstate", function (e) {
   }
 });
 
-window.addEventListener("popstate", (event) => {
-  const basePath = "/AquariumFish";
-  const currentPath = window.location.pathname.replace(basePath, "");
+function navigateTo(path) {
+  const fullPath = basePath + path.replace("/", ""); // Додаємо базовий шлях
+  history.pushState(null, "", fullPath);
+  console.log("Navigated to:", fullPath);
+}
 
+window.addEventListener("popstate", () => {
+  const currentPath = window.location.pathname.replace(basePath, "");
   console.log("Current path:", currentPath);
 
-  if (currentPath === "/" || currentPath === "") {
-    showFishTypeBoxes();
-  } else if (currentPath.startsWith("/fish/")) {
-    const fishId = currentPath.split("/")[2];
-    displayFishBox(fishId);
+  if (currentPath === "" || currentPath === "/") {
+    showFishTypeBoxes(); // Показати список риб
+  } else if (currentPath.startsWith("fish/")) {
+    const fishId = currentPath.split("/")[1];
+    displayFishBox(fishId); // Показати інформацію про конкретну рибу
   }
 });
 
