@@ -22,6 +22,24 @@ async function fetchFishData() {
     cachedFishData = fishData.record;
     sortFishData(cachedFishData);
     generateFishBoxes(cachedFishData);
+
+    if (cachedFishData.length === 0) {
+      throw new Error("Дані риб порожні.");
+    }
+
+    console.log("Кешовані дані риб:", cachedFishData);
+
+    // Відновити стан після завантаження даних
+    const savedState = restoreStateFromStorage();
+    const currentState = history.state;
+
+    if (savedState) {
+      handleState(savedState);
+    } else if (currentState) {
+      handleState(currentState);
+    } else {
+      showFishTypeBoxes(); // Показуємо всі риби, якщо нічого немає в історії
+    }
   } catch (error) {
     console.error("Помилка завантаження даних:", error);
   } finally {
@@ -29,20 +47,87 @@ async function fetchFishData() {
   }
 }
 
-function sortFishData(fishData) {
-  fishData.sort((a, b) => {
-    const nameA = a.classNameUA || "";
-    const nameB = b.classNameUA || "";
-    return nameA.localeCompare(nameB);
+function handleState(state) {
+  if (state.itemId) {
+    const item = findItemById(state.itemId);
+    if (item) {
+      displayFishItemBox(item, item.parentFish);
+      fishTypeBoxesContainer.classList.add("hidden"); // Приховуємо список риб
+    } else {
+      showFishTypeBoxes(); // Якщо item не знайдено, показуємо списки
+    }
+  } else if (state.fishId) {
+    const fish = cachedFishData.find((f) => f.id === state.fishId);
+    if (fish) {
+      displayFishBox(fish);
+    }
+  } else {
+    showFishTypeBoxes();
+  }
+}
+
+function displayFishItemBox(item, parentFish) {
+  showLoader();
+
+  fishBoxContainer.innerHTML = "";
+
+  const header = createHeaderItem(item, () => {
+    displayFishBox(parentFish);
+    history.replaceState(
+      { fishId: parentFish.id, source: "type" },
+      "",
+      `#${parentFish.id}`
+    );
+    saveStateToStorage({ fishId: parentFish.id, source: "type" });
   });
+
+  fishBoxContainer.appendChild(header);
+
+  const detailsContainer = document.createElement("div");
+  detailsContainer.classList.add("fish_item_details");
+
+  const imageBox = createImageBox(item);
+
+  detailsContainer.appendChild(imageBox);
+
+  const description = document.createElement("p");
+  description.textContent = item.description;
+  description.classList.add("fish_item_details_description");
+  detailsContainer.appendChild(description);
+
+  fishBoxContainer.appendChild(detailsContainer);
+
+  hideLoader();
+  currentItem = item;
+
+  history.replaceState(
+    { itemId: item.id, parentFishId: parentFish.id, source: "item" },
+    item.titleUA,
+    `#${item.id}`
+  );
+  saveStateToStorage({
+    itemId: item.id,
+    parentFishId: parentFish.id,
+    source: "item",
+  });
+}
+
+function findItemById(itemId) {
+  return cachedFishData
+    .flatMap((fish) => fish.items)
+    .find((item) => item.id === itemId);
+}
+
+function sortFishData(fishData) {
+  fishData.sort((a, b) => (a.classNameUA || "").localeCompare(b.classNameUA));
 
   fishData.forEach((fish) => {
     if (fish.items && Array.isArray(fish.items)) {
-      fish.items.sort((a, b) => {
-        const titleA = a.titleUA || "";
-        const titleB = b.titleUA || "";
-        return titleA.localeCompare(titleB);
+      fish.items.forEach((item) => {
+        item.parentFish = fish;
       });
+
+      fish.items.sort((a, b) => (a.titleUA || "").localeCompare(b.titleUA));
     }
   });
 }
@@ -98,6 +183,7 @@ function createFishTypeBox(fish) {
       `#${fish.id}`
     );
     displayFishBox(fish);
+    saveStateToStorage({ fishId: fish.id, source: "type" });
   });
 
   hideLoader();
@@ -112,6 +198,7 @@ function displayFishBox(fish) {
   const header = createHeaderFish(fish, () => {
     showFishTypeBoxes();
     history.replaceState({ source: "type" }, "", "");
+    saveStateToStorage({ source: "type" });
   });
 
   fishBoxContainer.appendChild(header);
@@ -136,9 +223,10 @@ function displayFishBox(fish) {
 
   history.replaceState(
     { fishId: fish.id, source: "type" },
-    fish.classNameUA,
+    fish.id,
     `#${fish.id}`
   );
+  saveStateToStorage({ fishId: fish.id, source: "type" });
 }
 
 function createFishItemBox(item, parentFish) {
@@ -179,54 +267,23 @@ function createFishItemBox(item, parentFish) {
   itemBox.addEventListener("click", (e) => {
     e.preventDefault();
     history.pushState(
-      { itemId: item.id, parentFishId: parentFish.id, source: "item" },
-      item.titleUA,
-      `#${item.id}`
+      {
+        itemId: item.titleEN,
+        parentFishId: parentFish.titleEN,
+        source: "item",
+      },
+      item.titleEN,
+      `#${item.titleEN}`
     );
     displayFishItemBox(item, parentFish);
+    saveStateToStorage({
+      itemId: item.id,
+      parentFishId: parentFish.id,
+      source: "item",
+    });
   });
 
   return itemBox;
-}
-
-function displayFishItemBox(item, parentFish) {
-  showLoader();
-
-  fishBoxContainer.innerHTML = "";
-
-  const header = createHeaderItem(item, () => {
-    displayFishBox(parentFish);
-    history.replaceState(
-      { fishId: parentFish.id, source: "type" },
-      "",
-      `#${parentFish.id}`
-    );
-  });
-
-  fishBoxContainer.appendChild(header);
-
-  const detailsContainer = document.createElement("div");
-  detailsContainer.classList.add("fish_item_details");
-
-  const imageBox = createImageBox(item);
-
-  detailsContainer.appendChild(imageBox);
-
-  const description = document.createElement("p");
-  description.textContent = item.description;
-  description.classList.add("fish_item_details_description");
-  detailsContainer.appendChild(description);
-
-  fishBoxContainer.appendChild(detailsContainer);
-
-  hideLoader();
-  currentItem = item;
-
-  history.replaceState(
-    { itemId: item.id, parentFishId: parentFish.id, source: "item" },
-    item.titleUA,
-    `#${item.id}`
-  );
 }
 
 function createImageBox(item) {
@@ -304,40 +361,28 @@ function updateDisplayedImage(mainImage, newImage) {
 }
 
 function showFishTypeBoxes() {
-  fishTypeBoxesContainer.style.display = "flex";
-  fishBoxContainer.innerHTML = "";
-  history.replaceState({ source: "type" }, "", "");
+  fishTypeBoxesContainer.classList.remove("hidden");
+  fishBoxContainer.classList.add("hidden");
+  history.replaceState({ source: "type" }, "", "/");
 }
 
 function hideFishTypeBoxes() {
-  fishTypeBoxesContainer.style.display = "none";
+  fishTypeBoxesContainer.classList.add("hidden");
+  fishBoxContainer.classList.remove("hidden");
 }
 
-window.addEventListener("popstate", (event) => {
-  const state = event.state;
+function restoreStateFromStorage() {
+  return JSON.parse(localStorage.getItem("state"));
+}
 
-  if (!state) {
-    history.replaceState(null, "", "/");
-    return showFishTypeBoxes();
-  }
+function saveStateToStorage(state) {
+  localStorage.setItem("state", JSON.stringify(state));
+}
 
-  if (state.fishId) {
-    const fish = cachedFishData.find((f) => f.id === state.fishId);
-    if (fish) {
-      return displayFishBox(fish);
-    }
-  }
-
-  if (state.itemId) {
-    const item = findItemById(state.itemId);
-    if (item) {
-      return displayFishItemBox(item, item.parentFish);
-    }
-  }
-
-  if (state.source === "type") {
-    history.replaceState(null, "", "/");
-    showFishTypeBoxes();
+window.addEventListener("popstate", function (e) {
+  const state = e.state;
+  if (state) {
+    handleState(state);
   }
 });
 

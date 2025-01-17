@@ -11,12 +11,11 @@ export async function fetchFishDataFromAPI() {
         },
       }
     );
-
     if (!response.ok) {
       throw new Error("Не вдалося завантажити дані");
     }
-
     const data = await response.json();
+    console.log("Дані риб:", data);
     return data;
   } catch (error) {
     console.error("Помилка при завантаженні даних:", error);

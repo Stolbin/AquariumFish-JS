@@ -40,6 +40,9 @@ button {
   cursor: pointer;
 }
 
+.hidden {
+  display: none !important;
+}
 address {
   display: flex;
   font-style: normal;
