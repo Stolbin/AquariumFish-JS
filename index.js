@@ -28,8 +28,6 @@ async function fetchFishData() {
     }
 
     console.log("Кешовані дані риб:", cachedFishData);
-
-    // Відновити стан після завантаження даних
     const savedState = restoreStateFromStorage();
     const currentState = history.state;
 
@@ -38,7 +36,7 @@ async function fetchFishData() {
     } else if (currentState) {
       handleState(currentState);
     } else {
-      showFishTypeBoxes(); // Показуємо всі риби, якщо нічого немає в історії
+      showFishTypeBoxes();
     }
   } catch (error) {
     console.error("Помилка завантаження даних:", error);
@@ -52,9 +50,9 @@ function handleState(state) {
     const item = findItemById(state.itemId);
     if (item) {
       displayFishItemBox(item, item.parentFish);
-      fishTypeBoxesContainer.classList.add("hidden"); // Приховуємо список риб
+      fishTypeBoxesContainer.classList.add("hidden");
     } else {
-      showFishTypeBoxes(); // Якщо item не знайдено, показуємо списки
+      showFishTypeBoxes();
     }
   } else if (state.fishId) {
     const fish = cachedFishData.find((f) => f.id === state.fishId);
@@ -379,40 +377,27 @@ function saveStateToStorage(state) {
   localStorage.setItem("state", JSON.stringify(state));
 }
 
-window.addEventListener("popstate", function (e) {
-  const state = e.state;
-  if (state) {
-    handleState(state);
-  }
-});
-
 window.addEventListener("popstate", (event) => {
-  const basePath = document.querySelector("base").getAttribute("href") || "/";
+  const basePath = document.querySelector("base").getAttribute("href");
   const state = event.state;
-
   if (!state) {
-    history.replaceState(null, "", basePath); // Використовуємо basePath
+    history.replaceState(null, "", basePath);
     return showFishTypeBoxes();
   }
-
   if (state.fishId) {
     const fish = cachedFishData.find((f) => f.id === state.fishId);
     if (fish) {
-      history.replaceState(state, "", `${basePath}fish/${state.fishId}`); // Використовуємо basePath
       return displayFishBox(fish);
     }
   }
-
   if (state.itemId) {
     const item = findItemById(state.itemId);
     if (item) {
-      history.replaceState(state, "", `${basePath}item/${state.itemId}`); // Використовуємо basePath
       return displayFishItemBox(item, item.parentFish);
     }
   }
-
   if (state.source === "type") {
-    history.replaceState(null, "", basePath); // Використовуємо basePath
+    history.replaceState(null, "", basePath);
     showFishTypeBoxes();
   }
 });
