@@ -387,29 +387,16 @@ window.addEventListener("popstate", function (e) {
 });
 
 window.addEventListener("popstate", (event) => {
-  const basePath = document.querySelector("base").getAttribute("href") || "/";
-  const state = event.state;
-  if (!state) {
-    history.replaceState(null, "", `${basePath}`);
-    return showFishTypeBoxes();
-  }
-  if (state.fishId) {
-    const fish = cachedFishData.find((f) => f.id === state.fishId);
-    if (fish) {
-      return displayFishBox(fish);
-    }
-  }
+  const basePath = "/AquariumFish";
+  const currentPath = window.location.pathname.replace(basePath, "");
 
-  if (state.itemId) {
-    const item = findItemById(state.itemId);
-    if (item) {
-      return displayFishItemBox(item, item.parentFish);
-    }
-  }
+  console.log("Current path:", currentPath);
 
-  if (state.source === "type") {
-    history.replaceState(null, "", `${basePath}`);
+  if (currentPath === "/" || currentPath === "") {
     showFishTypeBoxes();
+  } else if (currentPath.startsWith("/fish/")) {
+    const fishId = currentPath.split("/")[2];
+    displayFishBox(fishId);
   }
 });
 
