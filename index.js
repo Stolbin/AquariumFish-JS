@@ -386,21 +386,30 @@ window.addEventListener("popstate", function (e) {
   }
 });
 
-function navigateTo(path) {
-  const fullPath = basePath + path.replace("/", ""); // Додаємо базовий шлях
-  history.pushState(null, "", fullPath);
-  console.log("Navigated to:", fullPath);
-}
+window.addEventListener("popstate", (event) => {
+  const basePath = document.querySelector("base").getAttribute("href") || "/";
+  const state = event.state;
+  if (!state) {
+    history.replaceState(null, "", `${basePath}`);
+    return showFishTypeBoxes();
+  }
+  if (state.fishId) {
+    const fish = cachedFishData.find((f) => f.id === state.fishId);
+    if (fish) {
+      return displayFishBox(fish);
+    }
+  }
 
-window.addEventListener("popstate", () => {
-  const currentPath = window.location.pathname.replace(basePath, "");
-  console.log("Current path:", currentPath);
+  if (state.itemId) {
+    const item = findItemById(state.itemId);
+    if (item) {
+      return displayFishItemBox(item, item.parentFish);
+    }
+  }
 
-  if (currentPath === "" || currentPath === "/") {
-    showFishTypeBoxes(); // Показати список риб
-  } else if (currentPath.startsWith("fish/")) {
-    const fishId = currentPath.split("/")[1];
-    displayFishBox(fishId); // Показати інформацію про конкретну рибу
+  if (state.source === "type") {
+    history.replaceState(null, "", `${basePath}`);
+    showFishTypeBoxes();
   }
 });
 
