@@ -371,29 +371,4 @@ function hideFishTypeBoxes() {
   fishBoxContainer.classList.remove("hidden");
 }
 
-// window.addEventListener("popstate", (event) => {
-//   const basePath = document.querySelector("base").getAttribute("href");
-//   const state = event.state;
-//   if (!state) {
-//     history.replaceState(null, "", basePath);
-//     return showFishTypeBoxes();
-//   }
-//   if (state.fishId) {
-//     const fish = cachedFishData.find((f) => f.id === state.fishId);
-//     if (fish) {
-//       return displayFishBox(fish);
-//     }
-//   }
-//   if (state.itemId) {
-//     const item = findItemById(state.itemId);
-//     if (item) {
-//       return displayFishItemBox(item, item.parentFish);
-//     }
-//   }
-//   if (state.source === "type") {
-//     history.replaceState(null, "", basePath);
-//     showFishTypeBoxes();
-//   }
-// });
-
 fetchFishData();
