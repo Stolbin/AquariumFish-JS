@@ -1,4 +1,7 @@
-const isGitHubPages = window.location.hostname === "stolbin.github.io";
+const isGitHubPages =
+  window.location.hostname === "stolbin.github.io" &&
+  window.location.pathname.startsWith("/AquariumFish");
+
 const basePath = isGitHubPages ? "/AquariumFish/" : "/";
 
 const baseElement = document.createElement("base");
