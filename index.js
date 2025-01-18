@@ -2,6 +2,10 @@ import { fetchFishDataFromAPI } from "./js/api.js";
 import { showLoader, hideLoader } from "./js/show-hide_elements.js";
 import { createImageNavigation } from "./js/imageSlider.js";
 import { createHeaderFish, createHeaderItem } from "./js/headerTitle.js";
+import {
+  saveStateToStorage,
+  restoreStateFromStorage,
+} from "./js/storageFunction.js";
 
 const mainContainer = document.querySelector("main");
 const fishBoxContainer = document.querySelector(".fish_box_container");
@@ -26,8 +30,6 @@ async function fetchFishData() {
     if (cachedFishData.length === 0) {
       throw new Error("Дані риб порожні.");
     }
-
-    console.log("Кешовані дані риб:", cachedFishData);
     const savedState = restoreStateFromStorage();
     const currentState = history.state;
 
@@ -367,14 +369,6 @@ function showFishTypeBoxes() {
 function hideFishTypeBoxes() {
   fishTypeBoxesContainer.classList.add("hidden");
   fishBoxContainer.classList.remove("hidden");
-}
-
-function restoreStateFromStorage() {
-  return JSON.parse(localStorage.getItem("state"));
-}
-
-function saveStateToStorage(state) {
-  localStorage.setItem("state", JSON.stringify(state));
 }
 
 window.addEventListener("popstate", (event) => {
