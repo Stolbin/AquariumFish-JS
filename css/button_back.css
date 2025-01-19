@@ -11,7 +11,7 @@
   border: solid 1px #97cae9;
   background-color: #e0e2db;
   border-radius: 30px;
-  box-shadow: 2px 2px 2px #b2dffb, -2px -2px 2px #5486a5, 1px 1px 2px #437594;
+  box-shadow: 2px 2px 2px #b2dffb, -2px -2px 2px #5486a5;
   cursor: pointer;
   transition: box-shadow 0.3s ease, background-color 0.6s ease-in-out;
 }
@@ -22,5 +22,7 @@
 }
 
 .back_button:active {
+  background-color: #cfe3fa;
   box-shadow: inset 4px 4px 8px #b2dffb, inset -2px -2px 2px #5486a5;
+  transition: box-shadow 0.5s ease, background-color 0.6s ease-in-out;
 }
