@@ -1,6 +1,8 @@
 .image-box-wrapper {
   display: flex;
   flex-direction: column;
+  margin-bottom: 12px;
+  gap: 12px;
 }
 
 .main-description {
@@ -45,7 +47,6 @@ selector {
   font-size: 12px;
   font-weight: 400;
   line-height: 1.75;
-  margin: 0 0 24px;
   overflow-wrap: break-word;
   text-indent: 30px;
 }
@@ -192,6 +193,10 @@ selector {
 }
 
 @media (min-width: 600px) {
+  .image-box-wrapper {
+    margin-bottom: 20px;
+  }
+
   .main-description_title {
     font-size: 22px;
     text-align: start;
@@ -207,7 +212,6 @@ selector {
     font-size: inherit;
     font-weight: 400;
     line-height: 1.75;
-    margin: 0 0 24px;
     overflow-wrap: break-word;
     text-indent: 30px;
   }
@@ -225,7 +229,7 @@ selector {
   .image-box {
     width: 480px;
     height: 400px;
-    margin-bottom: 10px;
+    margin: 0;
   }
 
   .main-image {
@@ -264,21 +268,20 @@ selector {
 }
 
 @media (min-width: 1200px) {
+  .image-box-wrapper {
+    flex-direction: row;
+    margin-bottom: 18px;
+    gap: 30px;
+  }
+
   .image-box {
     width: 480px;
     height: 400px;
     margin-right: auto;
-    margin: 0;
-  }
-
-  .image-box-wrapper {
-    flex-direction: row;
-    gap: 30px;
   }
 
   .main-description {
     width: calc(100% - 480px);
-    margin: 14px 0;
   }
 
   .main-description_text {
