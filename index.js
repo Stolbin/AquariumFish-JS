@@ -68,7 +68,6 @@ function handleState(state) {
 
 function displayFishItemBox(item, parentFish) {
   showLoader();
-
   fishBoxContainer.innerHTML = "";
 
   const header = createHeaderItem(item, () => {
@@ -146,7 +145,6 @@ function generateFishBoxes(fishData) {
 
 function createFishTypeBox(fish) {
   showLoader();
-
   const box = document.createElement("div");
   box.className = "fish_type_box";
 
@@ -193,6 +191,7 @@ function createFishTypeBox(fish) {
 function displayFishBox(fish) {
   showLoader();
   hideFishTypeBoxes();
+
   fishBoxContainer.innerHTML = "";
 
   const header = createHeaderFish(fish, () => {
@@ -361,8 +360,8 @@ function updateDisplayedImage(mainImage, newImage) {
 }
 
 function showFishTypeBoxes() {
-  fishTypeBoxesContainer.classList.remove("hidden");
   fishBoxContainer.classList.add("hidden");
+  fishTypeBoxesContainer.classList.remove("hidden");
   history.replaceState({ source: "type" }, "", "/");
 }
 
