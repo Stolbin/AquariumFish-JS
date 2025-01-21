@@ -27,6 +27,7 @@
 
 .main-description_text {
   font-size: 12px;
+  line-height: 1.5;
 }
 
 .fish_item_img_details {
@@ -45,6 +46,11 @@ selector {
 
 .fish_item_descriptions_box {
   position: relative;
+  margin-bottom: 6px;
+}
+
+.fish_item_descriptions_box:last-child {
+  margin-bottom: 0;
 }
 
 .fish_item_descriptions_box h3 {
@@ -54,7 +60,6 @@ selector {
   font-family: "Oswald", arial narrow, sans-serif;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   text-indent: 15px;
-  margin-bottom: 4px;
 }
 
 .fish_item_descriptions_box p {
@@ -223,6 +228,9 @@ selector {
     font-size: 16px;
   }
 
+  .fish_item_descriptions_box {
+    margin-bottom: 10px;
+  }
   .fish_item_descriptions_box h3 {
     font-size: 20px;
     text-indent: 30px;
