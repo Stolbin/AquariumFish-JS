@@ -43,12 +43,27 @@ selector {
   text-indent: value;
 }
 
-.fish_item_details_description {
+.fish_item_descriptions_box {
+  position: relative;
+}
+
+.fish_item_descriptions_box h3 {
+  display: inline;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: "Oswald", arial narrow, sans-serif;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+  text-indent: 15px;
+  margin-bottom: 4px;
+}
+
+.fish_item_descriptions_box p {
+  display: inline;
   font-size: 12px;
   font-weight: 400;
   line-height: 1.75;
+  margin-left: 6px;
   overflow-wrap: break-word;
-  text-indent: 30px;
 }
 
 .fish_item_details_image {
@@ -208,12 +223,18 @@ selector {
     font-size: 16px;
   }
 
-  .fish_item_details_description {
+  .fish_item_descriptions_box h3 {
+    font-size: 20px;
+    text-indent: 30px;
+  }
+
+  .fish_item_descriptions_box p {
     font-size: inherit;
+    font-size: 18px;
     font-weight: 400;
     line-height: 1.75;
+    margin-left: 14px;
     overflow-wrap: break-word;
-    text-indent: 30px;
   }
 
   .fish_item_img_details {

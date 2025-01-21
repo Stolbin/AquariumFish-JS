@@ -86,13 +86,59 @@ function displayFishItemBox(item, parentFish) {
   detailsContainer.classList.add("fish_item_details");
 
   const imageBox = createImageBox(item);
-
   detailsContainer.appendChild(imageBox);
 
-  const description = document.createElement("p");
-  description.textContent = item.description;
-  description.classList.add("fish_item_details_description");
-  detailsContainer.appendChild(description);
+  const descriptionContainer = document.createElement("div");
+  descriptionContainer.classList.add("fish_item_description_box");
+  detailsContainer.appendChild(descriptionContainer);
+
+  //! Descriptions
+  const descriptions = item.descriptions || {};
+
+  //! Main Info
+  if (descriptions.mainInfo) {
+    const mainInfoContainer = document.createElement("div");
+    mainInfoContainer.classList.add("fish_item_descriptions_box");
+    const mainInfoTitle = document.createElement("h3");
+    mainInfoTitle.classList.add("fish_item_description_mainInfoTitle");
+    mainInfoTitle.textContent = `Опис:`;
+    const mainInfoText = document.createElement("p");
+    mainInfoText.classList.add("fish_item_description_mainInfoText");
+    mainInfoText.textContent = descriptions.mainInfo || "";
+
+    descriptionContainer.appendChild(mainInfoContainer);
+    mainInfoContainer.innerHTML = `<h3>${mainInfoTitle.textContent}</h3> <p>${mainInfoText.textContent}</p>`;
+  }
+
+  //! Environment
+  if (descriptions.environment) {
+    const environmentContainer = document.createElement("div");
+    environmentContainer.classList.add("fish_item_descriptions_box");
+    const environmentTitle = document.createElement("h3");
+    environmentTitle.classList.add("fish_item_description_environmentTitle");
+    environmentTitle.textContent = `Середовище:`;
+    const environmentText = document.createElement("p");
+    environmentText.classList.add("fish_item_description_environmentText");
+    environmentText.textContent = descriptions.environment || "";
+
+    descriptionContainer.appendChild(environmentContainer);
+    environmentContainer.innerHTML = `<h3>${environmentTitle.textContent}</h3> <p>${environmentText.textContent}</p>`;
+  }
+
+  //! Reproduction
+  if (descriptions.reproduction) {
+    const reproductionContainer = document.createElement("div");
+    reproductionContainer.classList.add("fish_item_descriptions_box");
+    const reproductionTitle = document.createElement("h3");
+    reproductionTitle.classList.add("fish_item_description_reproductionTitle");
+    reproductionTitle.textContent = `Розмноження:`;
+    const reproductionText = document.createElement("p");
+    reproductionText.classList.add("fish_item_description_reproductionText");
+    reproductionText.textContent = descriptions.reproduction || "";
+
+    descriptionContainer.appendChild(reproductionContainer);
+    reproductionContainer.innerHTML = `<h3>${reproductionTitle.textContent}</h3> <p>${reproductionText.textContent}</p>`;
+  }
 
   fishBoxContainer.appendChild(detailsContainer);
 
