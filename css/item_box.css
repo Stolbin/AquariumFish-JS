@@ -40,10 +40,6 @@
   margin-bottom: 14px;
 }
 
-selector {
-  text-indent: value;
-}
-
 .fish_item_descriptions_box {
   position: relative;
   margin-bottom: 6px;
@@ -59,7 +55,7 @@ selector {
   font-weight: 600;
   font-family: "Oswald", arial narrow, sans-serif;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-  text-indent: 15px;
+  margin-left: 16px;
 }
 
 .fish_item_descriptions_box p {
@@ -233,7 +229,6 @@ selector {
   }
   .fish_item_descriptions_box h3 {
     font-size: 20px;
-    text-indent: 30px;
   }
 
   .fish_item_descriptions_box p {
