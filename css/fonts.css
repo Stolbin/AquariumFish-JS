@@ -1,6 +1,24 @@
 @font-face {
   font-family: "Pacifico";
-  src: url("fonts/Pacifico-Regular.woff2") format("woff2"),
-    url("fonts/Pacifico-Regular.woff") format("woff");
+  src: url("../fonts/Pacifico/Pacifico-Regular.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Platypi";
+  src: url("../fonts/Platypi/Platypi-Italic-VariableFont_wght.ttf")
+    format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sedan";
+  src: url("../fonts/Sedan/Sedan-Italic.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sofadi_One";
+  src: url("../fonts/Sofadi_One/SofadiOne-Regular.ttf") format("truetype");
   font-display: swap;
 }
