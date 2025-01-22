@@ -1,3 +1,5 @@
+import { clearStateFromStorage } from "./storageFunction.js";
+
 window.addEventListener("keydown", function (event) {
   if (
     (event.key === "F5" || (event.ctrlKey && event.key === "r")) &&

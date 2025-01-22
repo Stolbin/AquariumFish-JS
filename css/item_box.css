@@ -227,15 +227,15 @@
   .fish_item_descriptions_box {
     margin-bottom: 10px;
   }
+
   .fish_item_descriptions_box h3 {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .fish_item_descriptions_box p {
     font-size: inherit;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
-    line-height: 1.75;
     margin-left: 14px;
     overflow-wrap: break-word;
   }
@@ -311,6 +311,16 @@
   .main-description_text {
     width: 65%;
     font-size: 18px;
+  }
+
+  .fish_item_descriptions_box h3 {
+    font-size: 20px;
+  }
+
+  .fish_item_descriptions_box p {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.75;
   }
 }
 
