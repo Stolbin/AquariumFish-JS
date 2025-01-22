@@ -231,12 +231,10 @@
     font-size: 16px;
   }
 
-  .fish_item_descriptions_box p {
-    font-size: inherit;
+  /* .fish_item_descriptions_box p {
     font-size: 14px;
     margin-left: 14px;
-    overflow-wrap: break-word;
-  }
+  } */
 
   .fish_item_img_details {
     display: flex;
