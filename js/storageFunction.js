@@ -5,3 +5,7 @@ export function restoreStateFromStorage() {
 export function saveStateToStorage(state) {
   localStorage.setItem("state", JSON.stringify(state));
 }
+
+export function clearStateFromStorage() {
+  localStorage.removeItem("state");
+}

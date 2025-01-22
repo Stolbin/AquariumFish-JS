@@ -5,7 +5,14 @@ import { createHeaderFish } from "./js/headerTitle.js";
 import {
   saveStateToStorage,
   restoreStateFromStorage,
+  clearStateFromStorage,
 } from "./js/storageFunction.js";
+
+document.querySelector(".nav_dox_link").addEventListener("click", (e) => {
+  e.preventDefault();
+  clearStateFromStorage();
+  window.location.href = "/";
+});
 
 const mainContainer = document.querySelector("main");
 export const fishBoxContainer = document.querySelector(".fish_box_container");
