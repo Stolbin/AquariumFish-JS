@@ -69,15 +69,21 @@ export function displayFishItemBox(item, parentFish) {
   if (descriptions.reproduction) {
     const reproductionContainer = document.createElement("div");
     reproductionContainer.classList.add("fish_item_descriptions_box");
+
     const reproductionTitle = document.createElement("h3");
     reproductionTitle.classList.add("fish_item_description_reproductionTitle");
     reproductionTitle.textContent = `Розмноження:`;
+
     const reproductionText = document.createElement("p");
     reproductionText.classList.add("fish_item_description_reproductionText");
-    reproductionText.textContent = descriptions.reproduction || "";
+    reproductionText.innerHTML = (descriptions.reproduction || "").replace(
+      /\n/g,
+      "<br>&nbsp;&nbsp;&nbsp;"
+    );
 
+    reproductionContainer.appendChild(reproductionTitle);
+    reproductionContainer.appendChild(reproductionText);
     descriptionContainer.appendChild(reproductionContainer);
-    reproductionContainer.innerHTML = `<h3>${reproductionTitle.textContent}</h3> <p>${reproductionText.textContent}</p>`;
   }
 
   fishBoxContainer.appendChild(detailsContainer);
