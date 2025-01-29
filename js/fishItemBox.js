@@ -39,30 +39,40 @@ export function displayFishItemBox(item, parentFish) {
   if (descriptions.mainInfo) {
     const mainInfoContainer = document.createElement("div");
     mainInfoContainer.classList.add("fish_item_descriptions_box");
+
     const mainInfoTitle = document.createElement("h3");
     mainInfoTitle.classList.add("fish_item_description_mainInfoTitle");
     mainInfoTitle.textContent = `Опис:`;
+
     const mainInfoText = document.createElement("p");
     mainInfoText.classList.add("fish_item_description_mainInfoText");
-    mainInfoText.textContent = descriptions.mainInfo || "";
+    mainInfoText.innerHTML = (descriptions.mainInfo || "")
+      .replace(/\n/g, "<br>")
+      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
 
+    mainInfoContainer.appendChild(mainInfoTitle);
+    mainInfoContainer.appendChild(mainInfoText);
     descriptionContainer.appendChild(mainInfoContainer);
-    mainInfoContainer.innerHTML = `<h3>${mainInfoTitle.textContent}</h3> <p>${mainInfoText.textContent}</p>`;
   }
 
   //! Environment
   if (descriptions.environment) {
     const environmentContainer = document.createElement("div");
     environmentContainer.classList.add("fish_item_descriptions_box");
+
     const environmentTitle = document.createElement("h3");
     environmentTitle.classList.add("fish_item_description_environmentTitle");
     environmentTitle.textContent = `Середовище:`;
+
     const environmentText = document.createElement("p");
     environmentText.classList.add("fish_item_description_environmentText");
-    environmentText.textContent = descriptions.environment || "";
+    environmentText.innerHTML = (descriptions.environment || "")
+      .replace(/\n/g, "<br>")
+      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
 
+    environmentContainer.appendChild(environmentTitle);
+    environmentContainer.appendChild(environmentText);
     descriptionContainer.appendChild(environmentContainer);
-    environmentContainer.innerHTML = `<h3>${environmentTitle.textContent}</h3> <p>${environmentText.textContent}</p>`;
   }
 
   //! Reproduction
@@ -76,10 +86,9 @@ export function displayFishItemBox(item, parentFish) {
 
     const reproductionText = document.createElement("p");
     reproductionText.classList.add("fish_item_description_reproductionText");
-    reproductionText.innerHTML = (descriptions.reproduction || "").replace(
-      /\n/g,
-      "<br>&nbsp;&nbsp;&nbsp;"
-    );
+    reproductionText.innerHTML = (descriptions.reproduction || "")
+      .replace(/\n/g, "<br>&nbsp;&nbsp;&nbsp;")
+      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
 
     reproductionContainer.appendChild(reproductionTitle);
     reproductionContainer.appendChild(reproductionText);
