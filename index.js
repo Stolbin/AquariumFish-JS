@@ -29,6 +29,7 @@ async function fetchFishData() {
   try {
     const fishData = await fetchFishDataFromAPI();
     cachedFishData = fishData.record;
+    // cachedFishData = fishData;
     sortFishData(cachedFishData);
     generateFishBoxes(cachedFishData);
 
