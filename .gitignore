@@ -79,7 +79,7 @@ typings/
 *test.html
 
 # JSON files directory
-fish.json
+# fish.json
 
 # dotenv environment variables file
 .env
