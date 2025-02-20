@@ -29,7 +29,7 @@ export function displayFishItemBox(item, parentFish) {
   detailsContainer.appendChild(imageBox);
 
   const descriptionContainer = document.createElement("div");
-  descriptionContainer.classList.add("fish_item_description_box");
+  descriptionContainer.classList.add("fish_item_descriptions_box");
   detailsContainer.appendChild(descriptionContainer);
 
   //! Descriptions

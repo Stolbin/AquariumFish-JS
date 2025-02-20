@@ -8,8 +8,7 @@ export function scrollToTop() {
     const svgImage = document.createElement("img");
     svgImage.src = "../img/up-arrow-svgrepo-com.svg";
     svgImage.alt = "Scroll to top";
-    svgImage.style.width = "100%";
-    svgImage.style.height = "100%";
+    svgImage.className = "scroll-to-top_img";
     scrollToTopButton.appendChild(svgImage);
 
     document.body.appendChild(scrollToTopButton);

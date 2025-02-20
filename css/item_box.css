@@ -1,4 +1,5 @@
 .image-box-wrapper {
+  width: 100%;
   display: flex;
   flex-direction: column;
   margin-bottom: 12px;
@@ -41,6 +42,7 @@
 }
 
 .fish_item_descriptions_box {
+  width: 100%;
   position: relative;
   margin-bottom: 6px;
 }
@@ -168,7 +170,7 @@
 
 .thumbnail-strip {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   margin-top: 10px;
   object-fit: cover;
@@ -257,13 +259,7 @@
   .thumbnail-strip {
     width: 480px;
     height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     gap: 5px;
-    margin-top: 10px;
-    object-fit: cover;
-    overflow: hidden;
   }
 
   .thumbnail {
@@ -288,7 +284,7 @@
   .image-box-wrapper {
     flex-direction: row;
     margin-bottom: 18px;
-    gap: 30px;
+    gap: 20px;
   }
 
   .image-box {
@@ -318,7 +314,6 @@
 
 @media (min-width: 1400px) {
   .image-box-wrapper {
-    flex-direction: row;
     justify-content: space-between;
   }
 
@@ -343,4 +338,10 @@
     width: 450px;
     text-align: end;
   }
+}
+
+.collapsible-section {
+  border: 1px solid transparent;
+  border-radius: 5px;
+  overflow: hidden;
 }

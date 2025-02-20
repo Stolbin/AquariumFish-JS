@@ -1,20 +1,11 @@
-.fish_box_container {
-  width: 100%;
-}
-
 .fish_box_header {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: start;
   justify-content: center;
   gap: 12px;
-}
-
-.fish-title-box,
-.item-title-box {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  flex-grow: 1;
 }
 
 .fish-title,
@@ -34,7 +25,8 @@
 
 .fish_type_boxes_container,
 .fish_box_container,
-.fish_items_container {
+.fish_items_container,
+.fish_item_details {
   width: 100%;
   height: auto;
   display: flex;
