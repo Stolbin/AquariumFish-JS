@@ -1,4 +1,6 @@
 .back_button {
+  position: absolute;
+  left: 0;
   width: 70px;
   height: 30px;
   display: inline-block;
@@ -26,4 +28,11 @@
   background-color: #cfe3fa;
   box-shadow: inset 4px 4px 8px #b2dffb, inset -2px -2px 2px #5486a5;
   transition: box-shadow 0.5s ease, background-color 0.6s ease-in-out;
+}
+
+@media (min-width: 950px) {
+  .back_button {
+    top: 50%;
+    transform: translate(0%, -50%);
+  }
 }

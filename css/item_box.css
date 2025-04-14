@@ -23,6 +23,7 @@
   width: 220px;
   font-size: 12px;
   font-family: "Oswald", arial narrow, sans-serif;
+  color: rgb(58, 25, 25);
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
 }
 
@@ -94,8 +95,6 @@
   position: relative;
   object-fit: cover;
   overflow: hidden;
-  margin-right: auto;
-  margin-left: auto;
 }
 
 .main-image {
@@ -169,10 +168,11 @@
 }
 
 .thumbnail-strip {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 18px;
   object-fit: cover;
   overflow: hidden;
 }
@@ -258,7 +258,8 @@
 
   .thumbnail-strip {
     width: 480px;
-    height: 80px;
+    height: 50px;
+    margin-top: 10px;
     gap: 5px;
   }
 
@@ -283,6 +284,7 @@
 @media (min-width: 1200px) {
   .image-box-wrapper {
     flex-direction: row;
+    align-items: center;
     margin-bottom: 18px;
     gap: 20px;
   }
@@ -315,6 +317,7 @@
 @media (min-width: 1400px) {
   .image-box-wrapper {
     justify-content: space-between;
+    align-items: normal;
   }
 
   .main-description {

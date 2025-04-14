@@ -1,11 +1,19 @@
 .fish_box_header {
+  position: relative;
   width: 100%;
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 20px;
+}
+
+.fish-title-box,
+.item-title-box {
+  display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
-  align-items: start;
-  justify-content: center;
-  gap: 12px;
-  flex-grow: 1;
+  gap: 4px;
 }
 
 .fish-title,
@@ -14,8 +22,8 @@
   font-size: 18px;
   font-family: "Oswald", arial narrow, sans-serif;
   line-height: 1.2;
+  color: #333333;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-  color: rgb(37, 30, 30);
 }
 
 .item-title_number {
@@ -38,6 +46,7 @@
 
 .fish_box_container {
   flex-direction: column;
+  gap: 0px;
 }
 
 .img_fish {
@@ -156,13 +165,22 @@
   text-decoration: none;
 }
 
+@media (min-width: 380px) {
+  .fish_box_header {
+    justify-content: center;
+  }
+}
+
 @media (min-width: 480px) {
+  .fish_box_header {
+    padding-right: 0px;
+  }
+
   .fish_box_container {
     margin-top: -12px;
   }
 
   .fish_type_boxes_container,
-  .fish_box_container,
   .fish_items_container {
     gap: 24px 12px;
   }
@@ -210,13 +228,23 @@
 @media (min-width: 768px) {
   .fish-title-box,
   .item-title-box {
-    flex-direction: row;
+    flex-direction: column;
     gap: 12px;
   }
 
   .fish-title,
   .item-title,
   .item-title_number {
-    font-size: 24px;
+    font-size: 28px;
+  }
+}
+
+@media (min-width: 950px) {
+  .fish-title-box,
+  .item-title-box {
+    flex-direction: row;
+  }
+  .fish_box_header {
+    margin-bottom: 20px;
   }
 }
