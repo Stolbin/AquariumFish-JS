@@ -207,9 +207,12 @@
     width: 100%;
   }
 
-  .fish_type_linkText,
-  .fish_item_linkText {
+  .fish_type_linkText {
     font-size: 14px;
+  }
+
+  .fish_item_linkText {
+    font-size: 13px;
   }
 }
 
