@@ -259,4 +259,8 @@
   .fish_item_details {
     margin-top: 30px;
   }
+
+  .fish_item_details {
+    gap: 30px;
+  }
 }

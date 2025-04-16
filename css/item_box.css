@@ -2,14 +2,12 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 12px;
   align-items: center;
   gap: 12px;
 }
 
 .main-description {
   width: 300px;
-  margin-bottom: 6px;
 }
 
 .description-box {
@@ -31,6 +29,7 @@
 
 .main-description_text {
   font-family: "Segoe UI", sans-serif;
+  text-align: right;
   font-size: 12px;
   line-height: 1.5;
 }
@@ -90,7 +89,6 @@
 
 .image-box {
   width: 300px;
-  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -104,6 +102,7 @@
   width: 300px;
   height: 75%;
   object-fit: cover;
+  border-radius: 12px;
   position: relative;
 }
 
@@ -215,12 +214,8 @@
 }
 
 @media (min-width: 600px) {
-  .image-box-wrapper {
-    margin-bottom: 20px;
-  }
-
   .main-description_title {
-    font-size: 22px;
+    font-size: 20px;
     text-align: start;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   }
@@ -250,7 +245,6 @@
 
   .image-box {
     width: 480px;
-    height: 400px;
     margin: 0;
   }
 
@@ -297,7 +291,6 @@
 
   .image-box {
     width: 480px;
-    height: 360px;
     margin-right: auto;
   }
 
@@ -307,6 +300,10 @@
     flex-direction: column;
     align-content: flex-start;
     width: calc(100% - 480px);
+  }
+
+  .main-description_title {
+    font-size: 22px;
   }
 
   .main-description_text {
