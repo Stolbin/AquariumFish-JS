@@ -60,6 +60,7 @@ export function createImageNavigation(
 
   item.images.forEach((image, index) => {
     const thumbnail = document.createElement("img");
+    thumbnail.loading = "lazy";
     thumbnail.src = image.src;
     thumbnail.alt = image.alt || item.title;
     thumbnail.classList.add("thumbnail");

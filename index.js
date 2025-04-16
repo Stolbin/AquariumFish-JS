@@ -114,6 +114,7 @@ function createFishTypeBox(fish) {
   const img = document.createElement("img");
   img.src = fish.image;
   img.alt = fish.image_alt;
+  img.loading = "lazy";
   img.classList.add("fish_type_image");
 
   imageContainer.appendChild(img);
@@ -198,6 +199,7 @@ function createFishItemBox(item, parentFish) {
   const img = document.createElement("img");
   img.src = item.images && item.images[0]?.src;
   img.alt = item.titleUA;
+  img.loading = "lazy";
   img.classList.add("fish_item_image");
   imageContainer.appendChild(img);
 

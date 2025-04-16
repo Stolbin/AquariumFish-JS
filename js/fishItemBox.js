@@ -123,6 +123,7 @@ function createImageBox(item) {
   mainImageContainer.classList.add("main-image");
 
   const mainImage = document.createElement("img");
+  mainImage.loading = "lazy";
   mainImage.src = item.images[0]?.src || item.image;
   mainImage.alt = item.images[0]?.alt || item.titleUA;
   mainImage.id = "displayed-image";
