@@ -3,18 +3,20 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 12px;
+  align-items: center;
   gap: 12px;
 }
 
 .main-description {
-  width: 100%;
+  width: 300px;
   margin-bottom: 6px;
 }
 
 .description-box {
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
   padding: 2px 0;
   gap: 4px;
 }
@@ -251,6 +253,10 @@
     margin: 0;
   }
 
+  .main-description {
+    width: 480px;
+  }
+
   .main-image {
     width: 480px;
     height: 300px;
@@ -285,17 +291,20 @@
   .image-box-wrapper {
     flex-direction: row;
     align-items: center;
-    margin-bottom: 18px;
     gap: 20px;
   }
 
   .image-box {
     width: 480px;
-    height: 400px;
+    height: 360px;
     margin-right: auto;
   }
 
   .main-description {
+    height: 360px;
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
     width: calc(100% - 480px);
   }
 
@@ -322,14 +331,9 @@
 
   .main-description {
     width: calc(100% - (480px + 5%));
-    margin: 14px 0;
   }
 
   .description-box {
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-    justify-content: flex-end;
     gap: 10px;
   }
 

@@ -1,16 +1,10 @@
+import { createBackButton } from "./backButton.js";
+
 export function createHeaderFish(fish, onBackClick) {
   const fishHeader = document.createElement("div");
   fishHeader.classList.add("fish_box_header");
 
-  const backButton = document.createElement("button");
-  backButton.textContent = "Назад";
-  backButton.classList.add("back_button");
-  backButton.addEventListener("click", () => {
-    history.replaceState(null, "", "/");
-    if (typeof onBackClick === "function") {
-      onBackClick();
-    }
-  });
+  const backButton = createBackButton(onBackClick);
   fishHeader.appendChild(backButton);
 
   const fishTitleBox = document.createElement("div");
@@ -34,15 +28,7 @@ export function createHeaderItem(item, onBackClick) {
   const itemFishHeader = document.createElement("div");
   itemFishHeader.classList.add("fish_box_header");
 
-  const backButton = document.createElement("button");
-  backButton.textContent = "Назад";
-  backButton.classList.add("back_button");
-  backButton.addEventListener("click", () => {
-    history.replaceState(null, "", "/");
-    if (typeof onBackClick === "function") {
-      onBackClick();
-    }
-  });
+  const backButton = createBackButton(onBackClick);
   itemFishHeader.appendChild(backButton);
 
   const itemTitleBox = document.createElement("div");
