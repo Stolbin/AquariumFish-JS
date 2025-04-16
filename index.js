@@ -86,7 +86,7 @@ function sortFishData(fishData) {
         item.parentFish = fish;
       });
 
-      fish.items.sort((a, b) => (a.titleUA || "").localeCompare(b.titleUA));
+      fish.items.sort((a, b) => (a.titleEN || "").localeCompare(b.titleEN));
     }
   });
 }
