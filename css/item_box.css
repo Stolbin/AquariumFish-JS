@@ -149,6 +149,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  will-change: all;
   transition: background-color 0.2s ease-in, color 0.2s ease-in;
 }
 
@@ -190,10 +191,10 @@
   border-radius: 8px;
   filter: blur(1px);
   transition: all 0.3s ease-in-out;
-}
-
-.thumbnail:hover {
-  border: 1px solid #876130;
+  will-change: transform, border;
+  &:hover {
+    border: 1px solid #876130;
+  }
 }
 
 .thumbnail.active-thumbnail {
