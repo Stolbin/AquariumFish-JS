@@ -1,7 +1,7 @@
 import { fetchFishDataFromAPI } from "./js/api.js";
 import { displayFishItemBox } from "./js/fishItemBox.js";
 import { showLoader, hideLoader } from "./js/show-hide_elements.js";
-import { createHeaderFish } from "./js/headerTitle.js";
+import { createHeaderFish, createHeaderGroupFish } from "./js/headerTitle.js";
 import {
   saveStateToStorage,
   restoreStateFromStorage,
@@ -35,6 +35,7 @@ async function fetchFishData() {
     if (cachedFishData.length === 0) {
       throw new Error("Дані риб порожні.");
     }
+
     const savedState = restoreStateFromStorage();
     const currentState = history.state;
 
@@ -56,18 +57,15 @@ function handleState(state) {
   if (state.itemId) {
     const item = findItemById(state.itemId);
     if (item) {
-      displayFishItemBox(item, item.parentFish);
+      const parentFish = item.parentFish;
+      const isFromGroup = state.source === "group";
+      const groupId = state.groupId;
+
+      displayFishItemBox(item, parentFish, isFromGroup, groupId);
       fishTypeBoxesContainer.classList.add("hidden");
     } else {
       showFishTypeBoxes();
     }
-  } else if (state.fishId) {
-    const fish = cachedFishData.find((f) => f.id === state.fishId);
-    if (fish) {
-      displayFishBox(fish);
-    }
-  } else {
-    showFishTypeBoxes();
   }
 }
 
@@ -149,11 +147,38 @@ function createFishTypeBox(fish) {
   return box;
 }
 
-export function displayFishBox(fish) {
+export function displayFishBox(fish, groupId = null) {
   showLoader();
   hideFishTypeBoxes();
-
   fishBoxContainer.innerHTML = "";
+
+  if (groupId) {
+    const group = fish.items.filter((item) => item.generalClassID === groupId);
+    const groupHeader = createHeaderGroupFish(group, () => {
+      displayFishBox(fish);
+      history.replaceState(
+        { fishId: fish.id, source: "type" },
+        "",
+        `#${fish.id}`
+      );
+      saveStateToStorage({ fishId: fish.id, source: "type" });
+    });
+
+    fishBoxContainer.appendChild(groupHeader);
+
+    const detailedContainer = document.createElement("div");
+    detailedContainer.classList.add("fish_items_container");
+
+    group.forEach((item) => {
+      const itemBox = createFishItemBox(item, fish);
+      detailedContainer.appendChild(itemBox);
+    });
+
+    fishBoxContainer.appendChild(detailedContainer);
+
+    hideLoader();
+    return;
+  }
 
   const header = createHeaderFish(fish, () => {
     showFishTypeBoxes();
@@ -166,12 +191,72 @@ export function displayFishBox(fish) {
   const itemsContainer = document.createElement("div");
   itemsContainer.classList.add("fish_items_container");
 
-  if (fish.items && fish.items.length > 0) {
-    fish.items.forEach((item) => {
-      const itemBox = createFishItemBox(item, fish);
+  const groupedItems = {};
+
+  fish.items.forEach((item) => {
+    const groupId = item.generalClassID || item.id;
+    if (!groupedItems[groupId]) {
+      groupedItems[groupId] = [];
+    }
+    groupedItems[groupId].push(item);
+  });
+
+  Object.entries(groupedItems).forEach(([groupId, group]) => {
+    if (group.length === 1 || !group[0].generalClassID) {
+      const itemBox = createFishItemBox(group[0], fish);
       itemsContainer.appendChild(itemBox);
-    });
-  } else {
+    } else {
+      const groupTitleUA = group[0].generalClassUA || "Невідома група";
+      const groupTitleEN = group[0].generalClassID || "";
+
+      const groupBox = document.createElement("div");
+      groupBox.className = "fish_item_box grouped";
+
+      const imageContainer = document.createElement("div");
+      imageContainer.classList.add("fish_item_image_container");
+
+      const img = document.createElement("img");
+      img.src = group[0].images?.[0]?.src || "";
+      img.alt = groupTitleUA;
+      img.loading = "lazy";
+      img.classList.add("fish_item_image");
+      imageContainer.appendChild(img);
+
+      const link = document.createElement("a");
+      link.href = `#${groupId}`;
+      link.classList.add("fish_item_linkText");
+
+      const titleUA = document.createElement("p");
+      titleUA.textContent = groupTitleUA;
+      const titleEN = document.createElement("p");
+      titleEN.textContent = `(${groupTitleEN})`;
+
+      link.appendChild(titleUA);
+      link.appendChild(titleEN);
+
+      groupBox.appendChild(imageContainer);
+      groupBox.appendChild(link);
+
+      groupBox.addEventListener("click", (e) => {
+        e.preventDefault();
+        displayFishBox(fish, groupId);
+        history.replaceState(
+          { fishId: fish.id, source: "group", groupId: groupId },
+          groupTitleUA,
+          `#${fish.id}`
+        );
+        saveStateToStorage({
+          fishId: fish.id,
+          source: "group",
+          groupId: groupId,
+        });
+      });
+
+      itemsContainer.appendChild(groupBox);
+    }
+  });
+
+  if (fish.items.length === 0) {
     const noItemsMessage = document.createElement("p");
     noItemsMessage.textContent = "Немає елементів для цього виду риби.";
     itemsContainer.appendChild(noItemsMessage);
@@ -227,20 +312,27 @@ function createFishItemBox(item, parentFish) {
 
   itemBox.addEventListener("click", (e) => {
     e.preventDefault();
+    const isFromGroup = item.generalClassID !== undefined;
+    const groupId = item.generalClassID;
+
     history.pushState(
       {
-        itemId: item.titleEN,
-        parentFishId: parentFish.titleEN,
-        source: "item",
+        itemId: item.id,
+        parentFishId: parentFish.id,
+        source: isFromGroup ? "group" : "item",
+        ...(isFromGroup && { groupId }),
       },
       item.titleEN,
-      `#${item.titleEN}`
+      `#${item.id}`
     );
-    displayFishItemBox(item, parentFish);
+
+    displayFishItemBox(item, parentFish, isFromGroup, groupId);
+
     saveStateToStorage({
       itemId: item.id,
       parentFishId: parentFish.id,
-      source: "item",
+      source: isFromGroup ? "group" : "item",
+      ...(isFromGroup && { groupId }),
     });
   });
 

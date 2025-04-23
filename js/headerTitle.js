@@ -24,6 +24,33 @@ export function createHeaderFish(fish, onBackClick) {
   return fishHeader;
 }
 
+export function createHeaderGroupFish(group, onBackClick) {
+  const groupFishHeader = document.createElement("div");
+  groupFishHeader.classList.add("fish_box_header");
+
+  const backButton = createBackButton(onBackClick);
+  groupFishHeader.appendChild(backButton);
+
+  const groupFishTitleBox = document.createElement("div");
+  groupFishTitleBox.classList.add("fish-title-box");
+  groupFishHeader.appendChild(groupFishTitleBox);
+
+  const generalClassUA = group[0]?.generalClassUA || "";
+  const generalClassID = group[0]?.generalClassID || "";
+
+  const headerTitleUA = document.createElement("h2");
+  headerTitleUA.textContent = generalClassUA;
+  headerTitleUA.classList.add("fish-title");
+  groupFishTitleBox.appendChild(headerTitleUA);
+
+  const headerTitleEN = document.createElement("h2");
+  headerTitleEN.textContent = generalClassID ? `(${generalClassID})` : "";
+  headerTitleEN.classList.add("fish-title");
+  groupFishTitleBox.appendChild(headerTitleEN);
+
+  return groupFishHeader;
+}
+
 export function createHeaderItem(item, onBackClick) {
   const itemFishHeader = document.createElement("div");
   itemFishHeader.classList.add("fish_box_header");

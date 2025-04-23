@@ -6,18 +6,33 @@ import { saveStateToStorage } from "./storageFunction.js";
 
 let currentItem = null;
 
-export function displayFishItemBox(item, parentFish) {
+export function displayFishItemBox(
+  item,
+  parentFish,
+  isFromGroup = false,
+  groupId = null
+) {
   showLoader();
   fishBoxContainer.innerHTML = "";
 
   const header = createHeaderItem(item, () => {
-    displayFishBox(parentFish);
+    displayFishBox(parentFish, isFromGroup ? groupId : null);
+
     history.replaceState(
-      { fishId: parentFish.id, source: "type" },
+      {
+        fishId: parentFish.id,
+        source: isFromGroup ? "group" : "type",
+        ...(isFromGroup && { groupId }),
+      },
       "",
       `#${parentFish.id}`
     );
-    saveStateToStorage({ fishId: parentFish.id, source: "type" });
+
+    saveStateToStorage({
+      fishId: parentFish.id,
+      source: isFromGroup ? "group" : "type",
+      ...(isFromGroup && { groupId }),
+    });
   });
 
   fishBoxContainer.appendChild(header);
@@ -32,10 +47,9 @@ export function displayFishItemBox(item, parentFish) {
   descriptionContainer.classList.add("fish_item_descriptions_box");
   detailsContainer.appendChild(descriptionContainer);
 
-  //! Descriptions
   const descriptions = item.descriptions || {};
 
-  //! Main Info
+  //! mainInfo
   if (descriptions.mainInfo) {
     const mainInfoContainer = document.createElement("div");
     mainInfoContainer.classList.add("fish_item_descriptions_box");
@@ -55,7 +69,7 @@ export function displayFishItemBox(item, parentFish) {
     descriptionContainer.appendChild(mainInfoContainer);
   }
 
-  //! Environment
+  //! environment
   if (descriptions.environment) {
     const environmentContainer = document.createElement("div");
     environmentContainer.classList.add("fish_item_descriptions_box");
@@ -75,7 +89,7 @@ export function displayFishItemBox(item, parentFish) {
     descriptionContainer.appendChild(environmentContainer);
   }
 
-  //! Reproduction
+  //! reproduction
   if (descriptions.reproduction) {
     const reproductionContainer = document.createElement("div");
     reproductionContainer.classList.add("fish_item_descriptions_box");
@@ -96,19 +110,25 @@ export function displayFishItemBox(item, parentFish) {
   }
 
   fishBoxContainer.appendChild(detailsContainer);
-
   hideLoader();
   currentItem = item;
 
   history.replaceState(
-    { itemId: item.id, parentFishId: parentFish.id, source: "item" },
+    {
+      itemId: item.id,
+      parentFishId: parentFish.id,
+      source: isFromGroup ? "group" : "type",
+      ...(isFromGroup && { groupId }),
+    },
     item.titleUA,
     `#${item.id}`
   );
+
   saveStateToStorage({
     itemId: item.id,
     parentFishId: parentFish.id,
-    source: "item",
+    source: isFromGroup ? "group" : "type",
+    ...(isFromGroup && { groupId }),
   });
 }
 
@@ -124,8 +144,8 @@ function createImageBox(item) {
 
   const mainImage = document.createElement("img");
   mainImage.loading = "lazy";
-  mainImage.src = item.images[0]?.src || item.image;
-  mainImage.alt = item.images[0]?.alt || item.titleUA;
+  mainImage.src = item.images?.[0]?.src || item.image;
+  mainImage.alt = item.images?.[0]?.alt || item.titleUA;
   mainImage.id = "displayed-image";
   mainImageContainer.appendChild(mainImage);
 
@@ -150,7 +170,7 @@ function createImageBox(item) {
     { title: "Регіон проживання:", value: item.region || null },
     { title: "Розмір:", value: item.size ? `${item.size}см` : null },
     {
-      title: "Температура: ",
+      title: "Температура:",
       value: item.temperature ? `${item.temperature}°C` : null,
     },
     { title: "pH:", value: item.pH ? `${item.pH}pH` : null },
