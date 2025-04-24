@@ -1,37 +1,41 @@
 .back_button {
   display: flex;
   justify-content: center;
-  align-content: center;
+  align-items: center;
   cursor: pointer;
   background: none;
   border: none;
   transform: scale(1);
-  color: rgb(16, 15, 15);
-  will-change: transform, text-shadow;
-  transition: transform 0.8s linear, color 0.5s linear;
 }
 
-.back_button::before {
-  content: "\21A9";
-  font-size: 22px;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
-  display: inline-block;
+.icon {
+  width: 24px;
+  height: 24px;
+  fill: rgb(16, 15, 15);
 }
 
-.back_button:hover {
-  color: rgb(9, 81, 35);
-  transform: scale(1.1);
-  transition: transform 0.8s linear, color 0.5s linear;
+.back_button .icon {
+  will-change: transform, fill;
+  transform: scale(1) scaleX(1);
+  transition: transform 0.7s ease, filter 0.6s ease;
+}
+.back_button:hover .icon {
+  transform: scale(1.1) scaleX(1.05);
+  filter: brightness(0.8) saturate(100%) invert(36%) sepia(92%) saturate(321%)
+    hue-rotate(70deg) brightness(70%) contrast(120%);
+  transition: transform 0.7s ease, filter 0.6s ease;
 }
 
 @media (min-width: 600px) {
-  .back_button:before {
-    font-size: 30px;
+  .icon {
+    width: 28px;
+    height: 28px;
   }
 }
 
 @media (min-width: 768px) {
-  .back_button:before {
-    font-size: 42px;
+  .icon {
+    width: 36px;
+    height: 36px;
   }
 }
