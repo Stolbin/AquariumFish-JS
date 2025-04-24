@@ -62,22 +62,26 @@ export function createHeaderItem(item, onBackClick) {
   itemTitleBox.classList.add("item-title-box");
   itemFishHeader.appendChild(itemTitleBox);
 
-  const headerTitleUA = document.createElement("h2");
-  headerTitleUA.textContent = item.titleUA ? item.titleUA : "";
-  headerTitleUA.classList.add("item-title");
-  itemTitleBox.appendChild(headerTitleUA);
+  if (item.titleUA) {
+    const headerTitleUA = document.createElement("h2");
+    headerTitleUA.textContent = item.titleUA;
+    headerTitleUA.classList.add("item-title");
+    itemTitleBox.appendChild(headerTitleUA);
+  }
 
-  const headerTitleEN = document.createElement("h2");
-  headerTitleEN.textContent = item.titleEN ? `(${item.titleEN})` : "";
-  headerTitleEN.classList.add("item-title");
-  itemTitleBox.appendChild(headerTitleEN);
+  if (item.titleEN) {
+    const headerTitleEN = document.createElement("h2");
+    headerTitleEN.textContent = `(${item.titleEN})`;
+    headerTitleEN.classList.add("item-title");
+    itemTitleBox.appendChild(headerTitleEN);
+  }
 
-  const headerTitleСlassification = document.createElement("h2");
-  headerTitleСlassification.textContent = item.classification
-    ? item.classification
-    : "";
-  headerTitleСlassification.classList.add("item-title_number");
-  itemTitleBox.appendChild(headerTitleСlassification);
+  if (item.classification) {
+    const headerTitleСlassification = document.createElement("h2");
+    headerTitleСlassification.textContent = item.classification;
+    headerTitleСlassification.classList.add("item-title_number");
+    itemTitleBox.appendChild(headerTitleСlassification);
+  }
 
   return itemFishHeader;
 }
