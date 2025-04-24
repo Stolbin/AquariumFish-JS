@@ -24,7 +24,7 @@
   font-size: 12px;
   font-family: "Oswald", arial narrow, sans-serif;
   color: rgb(58, 25, 25);
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+  text-shadow: var(--primery_text-shadow);
 }
 
 .main-description_text {
@@ -59,7 +59,7 @@
   font-size: 14px;
   font-weight: 600;
   font-family: "Oswald", arial narrow, sans-serif;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+  text-shadow: var(--primery_text-shadow);
   margin-left: 16px;
 }
 
@@ -218,7 +218,7 @@
   .main-description_title {
     font-size: 20px;
     text-align: start;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+    text-shadow: var(--primery_text-shadow);
   }
 
   .main-description_text {

@@ -29,8 +29,7 @@
 
 .scroll-to-top_img:hover {
   transform: translateY(-1px);
-  filter: brightness(0.8) saturate(100%) invert(36%) sepia(92%) saturate(321%)
-    hue-rotate(70deg) brightness(70%) contrast(120%);
+  filter: var(--button_hover_fill);
   transition: filter 0.6s ease, transform 0.6s ease;
 }
 

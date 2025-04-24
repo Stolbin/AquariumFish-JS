@@ -1,0 +1,5 @@
+:root {
+  --button_hover_fill: brightness(0.8) saturate(100%) invert(36%) sepia(92%)
+    saturate(321%) hue-rotate(70deg) brightness(70%) contrast(120%);
+  --primery_text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+}

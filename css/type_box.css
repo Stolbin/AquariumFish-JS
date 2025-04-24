@@ -22,7 +22,7 @@
   font-family: "Oswald", arial narrow, sans-serif;
   line-height: 1.2;
   color: #333333;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+  text-shadow: var(--primery_text-shadow);
 }
 
 .item-title_number {
@@ -167,7 +167,7 @@
   color: black;
   position: relative;
   transition: color 0.3s ease;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+  text-shadow: var(--primery_text-shadow);
   text-decoration: none;
 }
 
