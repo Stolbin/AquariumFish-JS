@@ -208,6 +208,7 @@
   .fish_type_image,
   .fish_item_image {
     width: 100%;
+    height: 100%;
   }
 
   .fish_type_linkText {
