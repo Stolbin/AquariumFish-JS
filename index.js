@@ -117,6 +117,9 @@ function createFishTypeBox(fish) {
 
   imageContainer.appendChild(img);
 
+  const link_box = document.createElement("div");
+  link_box.classList.add("fish_type_linkText_box");
+
   const link = document.createElement("a");
   link.href = `#${fish.id}`;
   link.classList.add("fish_type_linkText");
@@ -130,7 +133,8 @@ function createFishTypeBox(fish) {
   link.appendChild(titleEN);
 
   box.appendChild(imageContainer);
-  box.appendChild(link);
+  box.appendChild(link_box);
+  link_box.appendChild(link);
 
   box.addEventListener("click", (e) => {
     e.preventDefault();
@@ -222,6 +226,9 @@ export function displayFishBox(fish, groupId = null) {
       img.classList.add("fish_item_image");
       imageContainer.appendChild(img);
 
+      const link_box = document.createElement("div");
+      link_box.classList.add("fish_item_linkText_box");
+
       const link = document.createElement("a");
       link.href = `#${groupId}`;
       link.classList.add("fish_item_linkText");
@@ -235,7 +242,8 @@ export function displayFishBox(fish, groupId = null) {
       link.appendChild(titleEN);
 
       groupBox.appendChild(imageContainer);
-      groupBox.appendChild(link);
+      groupBox.appendChild(link_box);
+      link_box.appendChild(link);
 
       groupBox.addEventListener("click", (e) => {
         e.preventDefault();
@@ -295,6 +303,9 @@ function createFishItemBox(item, parentFish) {
     imageContainer.appendChild(headerTitleСlassification);
   }
 
+  const link_box = document.createElement("div");
+  link_box.classList.add("fish_item_linkText_box");
+
   const link = document.createElement("a");
   link.href = `#${item.id}`;
   link.classList.add("fish_item_linkText");
@@ -308,7 +319,8 @@ function createFishItemBox(item, parentFish) {
   link.appendChild(titleEN);
 
   itemBox.appendChild(imageContainer);
-  itemBox.appendChild(link);
+  itemBox.appendChild(link_box);
+  link_box.appendChild(link);
 
   itemBox.addEventListener("click", (e) => {
     e.preventDefault();
