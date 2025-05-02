@@ -110,6 +110,7 @@ export function displayFishItemBox(
   }
 
   fishBoxContainer.appendChild(detailsContainer);
+  window.scrollTo({ top: 0, behavior: "auto" });
   hideLoader();
   currentItem = item;
 

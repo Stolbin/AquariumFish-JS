@@ -146,7 +146,6 @@ function createFishTypeBox(fish) {
     displayFishBox(fish);
     saveStateToStorage({ fishId: fish.id, source: "type" });
   });
-
   hideLoader();
   return box;
 }
@@ -179,7 +178,7 @@ export function displayFishBox(fish, groupId = null) {
     });
 
     fishBoxContainer.appendChild(detailedContainer);
-
+    window.scrollTo({ top: 0, behavior: "auto" });
     hideLoader();
     return;
   }
@@ -271,6 +270,7 @@ export function displayFishBox(fish, groupId = null) {
   }
 
   fishBoxContainer.appendChild(itemsContainer);
+  window.scrollTo({ top: 0, behavior: "auto" });
   hideLoader();
   currentFish = fish;
 
