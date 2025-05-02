@@ -182,7 +182,6 @@ export function displayFishBox(fish, groupId = null) {
     hideLoader();
     return;
   }
-
   const header = createHeaderFish(fish, () => {
     showFishTypeBoxes();
     history.replaceState({ source: "type" }, "", "");
