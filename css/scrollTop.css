@@ -34,6 +34,7 @@
     transition: filter 0.6s ease, transform 0.6s ease;
   }
 }
+
 .scroll-to-top:active {
   transform: scale(1.1);
   transition: transform 0.3s ease;
