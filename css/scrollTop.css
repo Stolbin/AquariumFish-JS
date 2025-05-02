@@ -27,10 +27,12 @@
   transition: filter 0.6s ease, transform 0.6s ease;
 }
 
-.scroll-to-top_img:hover {
-  transform: translateY(-1px);
-  filter: var(--button_hover_fill);
-  transition: filter 0.6s ease, transform 0.6s ease;
+@media (hover: hover) and (pointer: fine) {
+  .scroll-to-top_img:hover {
+    transform: translateY(-1px);
+    filter: var(--button_hover_fill);
+    transition: filter 0.6s ease, transform 0.6s ease;
+  }
 }
 
 .scroll-to-top:active {
