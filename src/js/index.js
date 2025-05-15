@@ -9,6 +9,8 @@ import {
 } from "./storageFunction.js";
 import { scrollToTop } from "./scrollToTop.js";
 import { relocationStart } from "./relocationStartNav.js";
+import { createNavBox } from "./navigations.js";
+import { createFooter } from "./footer.js";
 
 scrollToTop();
 relocationStart();
