@@ -366,8 +366,8 @@ function hideFishTypeBoxes() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  createNavBox(document.body);
-  createFooter(document.body);
+  createNavBox(document.header);
+  createFooter(document.footer);
 });
 
 fetchFishData();
