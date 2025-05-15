@@ -365,6 +365,15 @@ function hideFishTypeBoxes() {
 
 fetchFishData();
 
-window.addEventListener("DOMContentLoaded", () => {
-  hideLoader();
+window.addEventListener("DOMContentLoaded", async () => {
+  showLoader();
+
+  try {
+    const data = await fetchData();
+    renderData(data);
+  } catch (error) {
+    console.error(error);
+  } finally {
+    hideLoader();
+  }
 });
