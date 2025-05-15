@@ -6,7 +6,7 @@ module.exports = {
   output: {
     filename: "bundle.[contenthash].js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: "./", // Додаємо тут!
+    publicPath: "./",
     clean: true,
   },
   module: {
