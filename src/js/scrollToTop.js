@@ -1,3 +1,5 @@
+import upArrowIcon from "../img/up-arrow-svgrepo-com.svg";
+
 export function scrollToTop() {
   document.addEventListener("DOMContentLoaded", () => {
     const scrollToTopButton = document.createElement("button");
@@ -6,7 +8,7 @@ export function scrollToTop() {
     scrollToTopButton.setAttribute("aria-label", "Scroll to top");
 
     const svgImage = document.createElement("img");
-    svgImage.src = "../img/up-arrow-svgrepo-com.svg";
+    svgImage.src = upArrowIcon;
     svgImage.alt = "Scroll to top";
     svgImage.className = "scroll-to-top_img";
     scrollToTopButton.appendChild(svgImage);

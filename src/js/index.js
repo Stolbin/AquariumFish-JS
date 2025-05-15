@@ -1,13 +1,14 @@
-import { fetchFishDataFromAPI } from "./js/api.js";
-import { displayFishItemBox } from "./js/fishItemBox.js";
-import { showLoader, hideLoader } from "./js/show-hide_elements.js";
-import { createHeaderFish, createHeaderGroupFish } from "./js/headerTitle.js";
+import "../css/index.css";
+import { fetchFishDataFromAPI } from "./api.js";
+import { displayFishItemBox } from "./fishItemBox.js";
+import { showLoader, hideLoader } from "./show-hide_elements.js";
+import { createHeaderFish, createHeaderGroupFish } from "./headerTitle.js";
 import {
   saveStateToStorage,
   restoreStateFromStorage,
-} from "./js/storageFunction.js";
-import { scrollToTop } from "./js/scrollToTop.js";
-import { relocationStart } from "./js/relocationStartNav.js";
+} from "./storageFunction.js";
+import { scrollToTop } from "./scrollToTop.js";
+import { relocationStart } from "./relocationStartNav.js";
 
 scrollToTop();
 relocationStart();

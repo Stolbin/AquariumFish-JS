@@ -1,4 +1,4 @@
-import { fishBoxContainer, displayFishBox } from "../index.js";
+import { fishBoxContainer, displayFishBox } from "./index.js";
 import { showLoader, hideLoader } from "./show-hide_elements.js";
 import { createHeaderItem } from "./headerTitle.js";
 import { createImageNavigation } from "./imageSlider.js";
