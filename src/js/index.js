@@ -9,8 +9,6 @@ import {
 } from "./storageFunction.js";
 import { scrollToTop } from "./scrollToTop.js";
 import { relocationStart } from "./relocationStartNav.js";
-import { createNavBox } from "./navigations.js";
-import { createFooter } from "./footer.js";
 
 scrollToTop();
 relocationStart();
@@ -366,8 +364,8 @@ function hideFishTypeBoxes() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  createNavBox(document.header);
-  createFooter(document.footer);
+  createNavBox(document.body);
+  createFooter(document.body);
 });
 
 fetchFishData();
