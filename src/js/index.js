@@ -366,15 +366,6 @@ function hideFishTypeBoxes() {
 document.addEventListener("DOMContentLoaded", () => {
   createNavBox(document.body);
   createFooter(document.body);
-
-  window.addEventListener("popstate", (event) => {
-    if (!event.state) {
-      showFishTypeBoxes();
-      saveStateToStorage({});
-    } else {
-      handleState(event.state);
-    }
-  });
 });
 
 fetchFishData();
