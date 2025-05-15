@@ -364,3 +364,7 @@ function hideFishTypeBoxes() {
 }
 
 fetchFishData();
+
+window.addEventListener("DOMContentLoaded", () => {
+  hideLoader();
+});
