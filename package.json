@@ -15,6 +15,7 @@
   },
   "scripts": {
     "start": "webpack serve --open",
-    "build": "webpack"
+    "build": "webpack --mode production",
+    "deploy": "gh-pages -d dist"
   }
 }
