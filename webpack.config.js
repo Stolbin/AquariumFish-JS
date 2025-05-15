@@ -34,6 +34,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/index.html",
+      favicon: "./src/img/icon_aquarium_fish.png",
       minify: {
         collapseWhitespace: true,
         removeComments: true,
