@@ -9,11 +9,17 @@ import {
 } from "./storageFunction.js";
 import { scrollToTop } from "./scrollToTop.js";
 import { relocationStart } from "./relocationStartNav.js";
+import { createFooter } from "./footer.js";
+import { createNavBox } from "./navigations.js";
 
 scrollToTop();
 relocationStart();
 
 const mainContainer = document.querySelector("main");
+
+document.querySelector("header").appendChild(createNavBox());
+document.querySelector("footer").appendChild(createFooter());
+
 export const fishBoxContainer = document.querySelector(".fish_box_container");
 
 const fishTypeBoxesContainer = document.createElement("div");
