@@ -9,8 +9,6 @@ import {
 } from "./storageFunction.js";
 import { scrollToTop } from "./scrollToTop.js";
 import { relocationStart } from "./relocationStartNav.js";
-import { createNavBox } from "./navigations.js";
-import { createFooter } from "./footer.js";
 
 scrollToTop();
 relocationStart();
@@ -286,19 +284,25 @@ export function displayFishBox(fish, groupId = null) {
 }
 
 function createFishItemBox(item, parentFish) {
-  const box = document.createElement("div");
-  box.classList.add("fish_item_box");
+  const itemBox = document.createElement("div");
+  itemBox.className = "fish_item_box";
 
   const imageContainer = document.createElement("div");
   imageContainer.classList.add("fish_item_image_container");
 
   const img = document.createElement("img");
-  img.src = item.images?.[0]?.src || "";
-  img.alt = item.titleUA || "";
+  img.src = item.images && item.images[0]?.src;
+  img.alt = item.titleUA;
   img.loading = "lazy";
   img.classList.add("fish_item_image");
-
   imageContainer.appendChild(img);
+
+  if (item.classification) {
+    const headerTitleСlassification = document.createElement("h2");
+    headerTitleСlassification.textContent = item.classification;
+    headerTitleСlassification.classList.add("item-number");
+    imageContainer.appendChild(headerTitleСlassification);
+  }
 
   const link_box = document.createElement("div");
   link_box.classList.add("fish_item_linkText_box");
@@ -306,36 +310,62 @@ function createFishItemBox(item, parentFish) {
   const link = document.createElement("a");
   link.href = `#${item.id}`;
   link.classList.add("fish_item_linkText");
-  link.textContent = item.titleUA || "";
 
-  box.appendChild(imageContainer);
-  box.appendChild(link_box);
+  const titleUA = document.createElement("p");
+  titleUA.textContent = item.titleUA || "";
+  const titleEN = document.createElement("p");
+  titleEN.textContent = `(${item.titleEN})` || "";
+
+  link.appendChild(titleUA);
+  link.appendChild(titleEN);
+
+  itemBox.appendChild(imageContainer);
+  itemBox.appendChild(link_box);
   link_box.appendChild(link);
 
-  box.addEventListener("click", (e) => {
+  itemBox.addEventListener("click", (e) => {
     e.preventDefault();
-    displayFishItemBox(item, parentFish);
-    saveStateToStorage({ itemId: item.id, source: "item" });
-    history.pushState({ itemId: item.id, source: "item" }, "", `#${item.id}`);
+    const isFromGroup = item.generalClassID !== undefined;
+    const groupId = item.generalClassID;
+
+    history.pushState(
+      {
+        itemId: item.id,
+        parentFishId: parentFish.id,
+        source: isFromGroup ? "group" : "item",
+        ...(isFromGroup && { groupId }),
+      },
+      item.titleEN,
+      `#${item.id}`
+    );
+
+    displayFishItemBox(item, parentFish, isFromGroup, groupId);
+
+    saveStateToStorage({
+      itemId: item.id,
+      parentFishId: parentFish.id,
+      source: isFromGroup ? "group" : "item",
+      ...(isFromGroup && { groupId }),
+    });
   });
 
-  return box;
+  return itemBox;
 }
 
 function showFishTypeBoxes() {
+  fishBoxContainer.classList.add("hidden");
   fishTypeBoxesContainer.classList.remove("hidden");
-  fishBoxContainer.innerHTML = "";
+  history.replaceState({ source: "type" }, "", "/");
 }
 
 function hideFishTypeBoxes() {
   fishTypeBoxesContainer.classList.add("hidden");
+  fishBoxContainer.classList.remove("hidden");
 }
 
 document.addEventListener("DOMContentLoaded", () => {
   createNavBox(document.body);
   createFooter(document.body);
-
-  fetchFishData();
 
   window.addEventListener("popstate", (event) => {
     if (!event.state) {
@@ -346,3 +376,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+fetchFishData();
