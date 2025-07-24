@@ -6,8 +6,8 @@ module.exports = {
   output: {
     filename: "bundle.[contenthash].js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: "./",
-    clean: true,
+    publicPath: "/",
+    // clean: true,
   },
   module: {
     rules: [
@@ -56,7 +56,7 @@ module.exports = {
     open: true,
     hot: true,
   },
-  mode: "production",
+  mode: process.env.NODE_ENV || "production",
   performance: {
     hints: false,
   },
