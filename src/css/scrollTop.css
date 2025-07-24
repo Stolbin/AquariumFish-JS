@@ -30,7 +30,7 @@
 @media (hover: hover) and (pointer: fine) {
   .scroll-to-top_img:hover {
     transform: translateY(-1px);
-    filter: var(--button-hover-filter);
+    filter: var(--button_hover_fill) var(--button-hover-filter);
     transition: filter 0.6s ease, transform 0.6s ease;
   }
 }
