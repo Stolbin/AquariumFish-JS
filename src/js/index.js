@@ -8,12 +8,10 @@ import {
   restoreStateFromStorage,
 } from "./storageFunction.js";
 import { scrollToTop } from "./scrollToTop.js";
-import { relocationStart } from "./relocationStartNav.js";
 import { createFooter } from "./footer.js";
 import { createNavBox } from "./navigations.js";
 
 scrollToTop();
-relocationStart();
 
 const mainContainer = document.querySelector("main");
 
