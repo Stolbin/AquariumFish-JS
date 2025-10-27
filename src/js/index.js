@@ -194,7 +194,7 @@ export function displayFishBox(fish, groupId = null) {
       itemsContainer.appendChild(createFishItemBox(group[0], fish));
     } else {
       const groupBox = document.createElement("div");
-      groupBox.className = "fish_item_box grouped";
+      groupBox.classList.add("fish_item_box", "grouped");
 
       const imgContainer = document.createElement("div");
       imgContainer.classList.add("fish_item_image_container");
@@ -205,6 +205,11 @@ export function displayFishBox(fish, groupId = null) {
       img.loading = "lazy";
       img.classList.add("fish_item_image");
       imgContainer.appendChild(img);
+
+      const countBadge = document.createElement("h2");
+      countBadge.classList.add("group_count_badge");
+      countBadge.textContent = group.length;
+      imgContainer.appendChild(countBadge);
 
       const linkBox = document.createElement("div");
       linkBox.classList.add("fish_item_linkText_box");
