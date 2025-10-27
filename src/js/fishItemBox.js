@@ -2,7 +2,6 @@ import { fishBoxContainer, displayFishBox } from "./index.js";
 import { showLoader, hideLoader } from "./show-hide_elements.js";
 import { createHeaderItem } from "./headerTitle.js";
 import { createImageNavigation } from "./imageSlider.js";
-import { saveStateToStorage } from "./storageFunction.js";
 
 let currentItem = null;
 
@@ -27,12 +26,6 @@ export function displayFishItemBox(
       "",
       `#${parentFish.id}`
     );
-
-    saveStateToStorage({
-      fishId: parentFish.id,
-      source: isFromGroup ? "group" : "type",
-      ...(isFromGroup && { groupId }),
-    });
   });
 
   fishBoxContainer.appendChild(header);
@@ -124,13 +117,6 @@ export function displayFishItemBox(
     item.titleUA,
     `#${item.id}`
   );
-
-  saveStateToStorage({
-    itemId: item.id,
-    parentFishId: parentFish.id,
-    source: isFromGroup ? "group" : "type",
-    ...(isFromGroup && { groupId }),
-  });
 }
 
 function createImageBox(item) {
