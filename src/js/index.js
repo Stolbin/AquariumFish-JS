@@ -232,6 +232,13 @@ export function displayFishBox(fish, groupId = null) {
 
       groupBox.addEventListener("click", (e) => {
         e.preventDefault();
+
+        history.pushState(
+          { fishId: fish.id, groupId: id, source: "group" },
+          `${fish.classNameUA} - group`,
+          `#${fish.id}-${id}`
+        );
+
         displayFishBox(fish, id);
       });
 
@@ -253,41 +260,62 @@ export function displayFishBox(fish, groupId = null) {
 
 async function fetchFishData() {
   showLoader();
-  try {
-    cachedFishData = (await fetchFishDataFromAPI()) || [];
-    if (!cachedFishData.length) throw new Error("Дані риб порожні.");
 
-    sortFishData(cachedFishData);
-    generateFishBoxes(cachedFishData);
+  const cached = localStorage.getItem("fishData");
+  if (cached) {
+    try {
+      const parsed = JSON.parse(cached);
+      cachedFishData = parsed;
+      sortFishData(cachedFishData);
+      generateFishBoxes(cachedFishData);
 
-    const state = restoreStateFromStorage() || history.state;
-    if (state && Object.keys(state).length) {
-      if (state.itemId && state.parentFishId) {
-        const parentFish = cachedFishData.find(
-          (f) => f.id === state.parentFishId
-        );
-        const item = parentFish?.items.find((it) => it.id === state.itemId);
-        if (item) {
-          fishTypeBoxesContainer.classList.add("hidden");
-          displayFishItemBox(
-            item,
-            parentFish,
-            state.source === "group",
-            state.groupId || null
+      const state = restoreStateFromStorage() || history.state;
+      if (state && Object.keys(state).length) {
+        if (state.itemId && state.parentFishId) {
+          const parentFish = cachedFishData.find(
+            (f) => f.id === state.parentFishId
           );
-        } else {
-          showFishTypeBoxes();
-        }
-      } else if (state.fishId) {
-        const fish = cachedFishData.find((f) => f.id === state.fishId);
-        if (fish) displayFishBox(fish, state.groupId || null);
-        else showFishTypeBoxes();
-      } else showFishTypeBoxes();
-    } else {
-      showFishTypeBoxes();
+          const item = parentFish?.items.find((it) => it.id === state.itemId);
+          if (item) {
+            fishTypeBoxesContainer.classList.add("hidden");
+            displayFishItemBox(
+              item,
+              parentFish,
+              state.source === "group",
+              state.groupId || null
+            );
+          } else showFishTypeBoxes();
+        } else if (state.fishId) {
+          const fish = cachedFishData.find((f) => f.id === state.fishId);
+          if (fish) displayFishBox(fish, state.groupId || null);
+          else showFishTypeBoxes();
+        } else showFishTypeBoxes();
+      } else {
+        showFishTypeBoxes();
+      }
+    } catch (e) {
+      console.warn("Проблема з кешем:", e);
+      localStorage.removeItem("fishData");
+    }
+  } else {
+    fishTypeBoxesContainer.innerHTML = "<p>Loading</p>";
+  }
+
+  try {
+    const freshData = await fetchFishDataFromAPI();
+    if (freshData?.length) {
+      cachedFishData = freshData;
+      localStorage.setItem("fishData", JSON.stringify(freshData));
+      sortFishData(freshData);
+      generateFishBoxes(freshData);
+
+      const currentState = history.state || restoreStateFromStorage();
+      if (!currentState || !Object.keys(currentState).length) {
+        showFishTypeBoxes();
+      }
     }
   } catch (err) {
-    console.error("Помилка завантаження даних:", err);
+    console.error("Помилка оновлення даних:", err);
   } finally {
     hideLoader();
   }
@@ -307,11 +335,17 @@ window.addEventListener("popstate", (event) => {
         state.source === "group",
         state.groupId || null
       );
-  }
-
-  if (state.fishId) {
+  } else if (state.fishId) {
     const fish = cachedFishData.find((f) => f.id === state.fishId);
-    if (fish) return displayFishBox(fish, state.groupId || null);
+    if (fish) {
+      if (state.groupId) {
+        displayFishBox(fish, state.groupId);
+      } else {
+        displayFishBox(fish);
+      }
+    } else {
+      showFishTypeBoxes();
+    }
   }
 
   showFishTypeBoxes();
