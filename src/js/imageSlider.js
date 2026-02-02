@@ -1,3 +1,5 @@
+import { handleImageLoading } from "./imageLoader.js";
+
 export function createImageNavigation(
   mainImage,
   item,
@@ -63,42 +65,54 @@ export function createImageNavigation(
   });
 
   item.images.forEach((image, index) => {
+    const thumbWrapper = document.createElement("div");
+    thumbWrapper.classList.add("thumbnail-wrapper");
+
     const thumbnail = document.createElement("img");
-    thumbnail.loading = "lazy";
     thumbnail.src = image.src;
-    thumbnail.alt = image.alt || item.title;
     thumbnail.classList.add("thumbnail");
     if (index === currentIndex) thumbnail.classList.add("active-thumbnail");
 
-    thumbnail.addEventListener("click", (e) => {
-      if (Math.abs(e.pageX - (startX + thumbnailStrip.offsetLeft)) > 5) return;
+    handleImageLoading(thumbnail, thumbWrapper);
+    thumbWrapper.appendChild(thumbnail);
+
+    thumbWrapper.addEventListener("click", (e) => {
+      if (isDown) {
+        const dragDistance = Math.abs(
+          e.pageX - (startX + thumbnailStrip.offsetLeft),
+        );
+        if (dragDistance > 5) return;
+      }
       currentIndex = index;
       updateThumbnails(thumbnailStrip, currentIndex);
       triggerImageUpdate();
     });
-    thumbnailStrip.appendChild(thumbnail);
+    thumbnailStrip.appendChild(thumbWrapper);
   });
 
   function triggerImageUpdate() {
+    mainImage.classList.remove("loaded");
     mainImage.classList.add("fade-out");
+
     setTimeout(() => {
       updateDisplayedImage(mainImage, item.images[currentIndex]);
       mainImage.classList.remove("fade-out");
-    }, 400);
+    }, 200);
   }
 
   function updateThumbnails(thumbnailStrip, activeIndex) {
-    const thumbnails = thumbnailStrip.querySelectorAll(".thumbnail");
-    thumbnails.forEach((thumbnail, index) => {
+    const wrappers = thumbnailStrip.querySelectorAll(".thumbnail-wrapper");
+    wrappers.forEach((wrapper, index) => {
+      const thumb = wrapper.querySelector(".thumbnail");
       if (index === activeIndex) {
-        thumbnail.classList.add("active-thumbnail");
-        thumbnail.scrollIntoView({
+        thumb.classList.add("active-thumbnail");
+        wrapper.scrollIntoView({
           behavior: "smooth",
           block: "nearest",
           inline: "center",
         });
       } else {
-        thumbnail.classList.remove("active-thumbnail");
+        thumb.classList.remove("active-thumbnail");
       }
     });
   }

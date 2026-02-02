@@ -195,9 +195,6 @@
   transform: scale(1);
   transition: transform 0.3s ease;
   will-change: transform;
-  &:hover {
-    transform: scale(1.05);
-  }
 }
 
 .fish_type_linkText_box,

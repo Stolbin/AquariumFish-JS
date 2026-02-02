@@ -72,6 +72,7 @@
   white-space: pre-line;
   white-space: pre-wrap;
 }
+
 .fish_item_details_image {
   width: 250px;
   height: 170px;
@@ -212,6 +213,20 @@
   will-change: transform, border;
   flex-shrink: 0;
   -webkit-user-drag: none;
+}
+
+.thumbnail-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.small-loader .img-spinner {
+  width: 15px;
+  height: 15px;
+  border-width: 2px;
 }
 
 .thumbnail:hover {
