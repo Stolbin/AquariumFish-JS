@@ -181,7 +181,14 @@
   cursor: grab;
   user-select: none;
   -ms-overflow-style: none;
-  scrollbar-width: none;
+  scroll-behavior: smooth;
+  will-change: scroll-position;
+}
+
+.thumbnail-strip::before,
+.thumbnail-strip::after {
+  content: "";
+  margin: auto;
 }
 
 .thumbnail-strip::-webkit-scrollbar {
