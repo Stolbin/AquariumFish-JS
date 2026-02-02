@@ -72,7 +72,6 @@
   white-space: pre-line;
   white-space: pre-wrap;
 }
-
 .fish_item_details_image {
   width: 250px;
   height: 170px;
@@ -151,6 +150,7 @@
   justify-content: center;
   will-change: all;
   transition: background-color 0.2s ease-in, color 0.2s ease-in;
+  z-index: 2;
 }
 
 .main-image:hover .prev-button,
@@ -173,11 +173,23 @@
 .thumbnail-strip {
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   padding: 10px 0;
-  object-fit: cover;
-  overflow: hidden;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  cursor: grab;
+  user-select: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.thumbnail-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.thumbnail-strip.grabbing {
+  cursor: grabbing;
 }
 
 .thumbnail {
@@ -186,15 +198,17 @@
   cursor: pointer;
   margin: 0;
   border: 2px solid transparent;
-  transition: border-color 0.3s ease;
   transform: scale(1);
   border-radius: 8px;
   filter: blur(1px);
   transition: all 0.3s ease-in-out;
   will-change: transform, border;
-  &:hover {
-    border: 0.5px solid #876130;
-  }
+  flex-shrink: 0;
+  -webkit-user-drag: none;
+}
+
+.thumbnail:hover {
+  border: 0.5px solid #876130;
 }
 
 .thumbnail.active-thumbnail {
@@ -204,7 +218,6 @@
   border-radius: 8px;
   border: none;
   will-change: all;
-  transition: all 0.3s ease-in-out;
 }
 
 @media (min-width: 500px) {
@@ -268,17 +281,10 @@
   .thumbnail {
     width: 70px;
     height: 50px;
-    cursor: pointer;
-    margin: 0;
-    border: 2px solid transparent;
-    transition: border-color 0.3s ease;
-    transform: scale(1);
-    border-radius: 8px;
-    filter: blur(1px);
-    transition: all 0.3s ease-in-out;
-    &:hover {
-      border: 1px solid #f6f4f1;
-    }
+  }
+
+  .thumbnail:hover {
+    border: 1px solid #f6f4f1;
   }
 }
 
