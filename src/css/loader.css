@@ -93,7 +93,6 @@ span:before {
   }
 }
 
-.main-image,
 .fish_item_image_container,
 .fish_type_image_container {
   position: relative;
@@ -102,10 +101,6 @@ span:before {
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.05);
   overflow: hidden;
-}
-
-.main-image {
-  min-height: 300px;
 }
 
 .image-loader-container {

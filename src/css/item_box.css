@@ -3,11 +3,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 4px;
 }
 
 .main-description {
-  width: 280px;
+  width: 95%;
 }
 
 .description-box {
@@ -47,7 +47,7 @@
 .fish_item_descriptions_box {
   width: 100%;
   position: relative;
-  margin-bottom: 6px;
+  margin: 0 6px 6px 6px;
 }
 
 .fish_item_descriptions_box:last-child {
@@ -81,24 +81,26 @@
   object-fit: cover;
   object-position: center;
   transition: box-shadow 0.5s ease-in-out;
-  &:hover {
-    box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.2);
-    transition: box-shadow 0.5s ease-in-out;
-  }
+}
+
+.fish_item_details_image:hover {
+  box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.2);
 }
 
 .image-box {
-  height: 100%;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 4px;
   overflow: hidden;
 }
 
 .main-image {
   width: 95%;
+  aspect-ratio: 8 / 5;
   border-radius: 12px;
   overflow: hidden;
   position: relative;
@@ -106,7 +108,7 @@
 
 .main-image img {
   width: 100%;
-  aspect-ratio: 8 / 5;
+  height: 100%;
   object-fit: cover;
   object-position: center;
   display: block;
@@ -123,8 +125,6 @@
 }
 
 .main-image img.fade-out {
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out;
   animation: fade-out 0.5s ease-in-out forwards;
 }
 
@@ -134,8 +134,7 @@
   width: 30px;
   height: 100%;
   top: 50%;
-  right: 0;
-  transform: translate(0, -50%);
+  transform: translateY(-50%);
   background-color: transparent;
   border: none;
   font-size: 30px;
@@ -144,70 +143,39 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  will-change: all;
-  transition: background-color 0.2s ease-in, color 0.2s ease-in;
   z-index: 2;
+  transition: background-color 0.2s ease-in, color 0.2s ease-in;
 }
 
 .main-image:hover .prev-button,
 .main-image:hover .next-button {
   background-color: rgba(211, 211, 211, 0.15);
-  color: transparent;
-  transition: background-color 0.3s ease-in, color 0.15s ease-in;
+  color: white;
 }
 
 .prev-button {
   left: 0;
   border-radius: 12px 0 0 12px;
 }
-
 .next-button {
   right: 0;
   border-radius: 0 12px 12px 0;
 }
 
 .thumbnail-strip {
-  width: 100%;
+  width: 95%;
+  max-width: 100%;
   display: flex;
-  justify-content: flex-start;
+  justify-content: safe center;
   align-items: center;
-  padding: 10px 0;
+  padding: 4px 0;
   overflow-x: auto;
-  scroll-behavior: smooth;
-  cursor: grab;
-  user-select: none;
-  -ms-overflow-style: none;
-  scroll-behavior: smooth;
-  will-change: scroll-position;
-}
-
-.thumbnail-strip::before,
-.thumbnail-strip::after {
-  content: "";
-  margin: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 .thumbnail-strip::-webkit-scrollbar {
   display: none;
-}
-
-.thumbnail-strip.grabbing {
-  cursor: grabbing;
-}
-
-.thumbnail {
-  width: 45px;
-  height: 30px;
-  cursor: pointer;
-  margin: 0;
-  border: 2px solid transparent;
-  transform: scale(1);
-  border-radius: 8px;
-  filter: blur(1px);
-  transition: all 0.3s ease-in-out;
-  will-change: transform, border;
-  flex-shrink: 0;
-  -webkit-user-drag: none;
 }
 
 .thumbnail-wrapper {
@@ -218,28 +186,44 @@
   flex-shrink: 0;
 }
 
-.small-loader .img-spinner {
-  width: 15px;
-  height: 15px;
-  border-width: 2px;
+.thumbnail {
+  width: 40px;
+  aspect-ratio: 8 / 5;
+  flex-shrink: 0;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  filter: blur(1px);
+  transition: all 0.3s ease-in-out;
+  -webkit-user-drag: none;
 }
 
 .thumbnail:hover {
-  border: 0.5px solid #876130;
+  border: 1px solid #876130;
+  filter: blur(0);
 }
 
 .thumbnail.active-thumbnail {
   transform: scale(1.15);
   filter: blur(0);
   margin: 0 5px;
-  border-radius: 8px;
-  border: none;
-  will-change: all;
+  border: 1.5px solid #876130;
 }
 
-@media (min-width: 500px) {
-  .main-image img {
-    width: 100%;
+.small-loader .img-spinner {
+  width: 15px;
+  height: 15px;
+  border-width: 2px;
+}
+
+@media (min-width: 425px) {
+  .image-box {
+    gap: 8px;
+  }
+
+  .thumbnail {
+    width: 55px;
   }
 }
 
@@ -247,7 +231,6 @@
   .main-description_title {
     font-size: 20px;
     text-align: start;
-    text-shadow: var(--primery_text-shadow);
   }
 
   .main-description_text {
@@ -255,27 +238,9 @@
     font-size: 16px;
   }
 
-  .fish_item_descriptions_box {
-    margin-bottom: 10px;
-  }
-
-  .fish_item_descriptions_box h3 {
-    font-size: 16px;
-  }
-
-  .fish_item_img_details {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 14px;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 14px;
-  }
-
   .image-box {
     width: 480px;
-    margin: 0;
+    gap: 10px;
   }
 
   .main-description {
@@ -288,19 +253,13 @@
   }
 
   .thumbnail-strip {
-    width: 480px;
-    height: 50px;
-    margin-top: 10px;
-    gap: 5px;
+    width: 100%;
+    height: 60px;
+    gap: 8px;
   }
 
   .thumbnail {
     width: 70px;
-    height: 50px;
-  }
-
-  .thumbnail:hover {
-    border: 1px solid #f6f4f1;
   }
 }
 
@@ -312,7 +271,6 @@
   }
 
   .image-box {
-    width: 480px;
     margin-right: auto;
   }
 
@@ -320,7 +278,6 @@
     height: 360px;
     display: flex;
     flex-direction: column;
-    align-content: flex-start;
     width: calc(100% - 480px);
   }
 
@@ -344,26 +301,11 @@
 }
 
 @media (min-width: 1400px) {
-  .image-box-wrapper {
-    justify-content: space-between;
-    align-items: normal;
-  }
-
   .main-description {
     width: calc(100% - (480px + 5%));
   }
-
-  .description-box {
-    gap: 10px;
-  }
-
-  .main-description_title {
-    text-align: end;
-  }
-
   .main-description_text {
     width: 450px;
-    text-align: end;
   }
 }
 
