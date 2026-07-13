@@ -11,7 +11,6 @@ export function createBackButton(onBackClick) {
   backButton.appendChild(svgArrowBack);
 
   backButton.addEventListener("click", () => {
-    history.replaceState({ source: "type" } && { source: "group" }, "", "/");
     if (typeof onBackClick === "function") {
       onBackClick();
     }

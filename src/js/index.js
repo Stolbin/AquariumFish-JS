@@ -25,6 +25,10 @@ mainContainer.appendChild(fishTypeBoxesContainer);
 let cachedFishData = null;
 let currentFish = null;
 
+export function slugify(text) {
+  return (text || "").toString().toLowerCase().trim().replace(/\s+/g, "-");
+}
+
 function showFishTypeBoxes() {
   fishBoxContainer.classList.add("hidden");
   fishTypeBoxesContainer.classList.remove("hidden");
@@ -71,7 +75,8 @@ function createFishTypeBox(fish) {
   const linkBox = document.createElement("div");
   linkBox.classList.add("fish_type_linkText_box");
   const link = document.createElement("a");
-  link.href = `#${fish.id}`;
+  const fishSlug = slugify(fish.classNameEN);
+  link.href = `#${fishSlug}`;
   link.classList.add("fish_type_linkText");
   const titleUA = document.createElement("p");
   titleUA.textContent = fish.classNameUA || "";
@@ -87,7 +92,7 @@ function createFishTypeBox(fish) {
     history.pushState(
       { fishId: fish.id, source: "type" },
       fish.classNameUA,
-      `#${fish.id}`,
+      `#${fishSlug}`,
     );
     displayFishBox(fish);
   });
@@ -115,7 +120,8 @@ function createFishItemBox(item, parentFish) {
   const linkBox = document.createElement("div");
   linkBox.classList.add("fish_item_linkText_box");
   const link = document.createElement("a");
-  link.href = `#${item.id}`;
+  const itemSlug = slugify(item.titleEN);
+  link.href = `#${itemSlug}`;
   link.classList.add("fish_item_linkText");
   const titleUA = document.createElement("p");
   titleUA.textContent = item.titleUA || "";
@@ -129,6 +135,15 @@ function createFishItemBox(item, parentFish) {
   itemBox.addEventListener("click", (e) => {
     e.preventDefault();
     const isFromGroup = item.generalClassID !== undefined;
+
+    const state = {
+      itemId: item.id,
+      parentFishId: parentFish.id,
+      source: isFromGroup ? "group" : "type",
+      ...(isFromGroup && { groupId: item.generalClassID }),
+    };
+    history.pushState(state, item.titleUA, `#${itemSlug}`);
+
     displayFishItemBox(item, parentFish, isFromGroup, item.generalClassID);
   });
   return itemBox;
@@ -138,11 +153,17 @@ export function displayFishBox(fish, groupId = null) {
   showLoader();
   hideFishTypeBoxes();
   fishBoxContainer.innerHTML = "";
+  const fishSlug = slugify(fish.classNameEN);
   if (groupId) {
     const group = fish.items.filter((item) => item.generalClassID === groupId);
-    const groupHeader = createHeaderGroupFish(group, () =>
-      displayFishBox(fish),
-    );
+    const groupHeader = createHeaderGroupFish(group, () => {
+      displayFishBox(fish);
+      history.pushState(
+        { fishId: fish.id, source: "type" },
+        fish.classNameUA,
+        `#${fishSlug}`,
+      );
+    });
     fishBoxContainer.appendChild(groupHeader);
     const detailedContainer = document.createElement("div");
     detailedContainer.classList.add("fish_items_container");
@@ -154,7 +175,10 @@ export function displayFishBox(fish, groupId = null) {
     hideLoader();
     return;
   }
-  const header = createHeaderFish(fish, showFishTypeBoxes);
+  const header = createHeaderFish(fish, () => {
+    showFishTypeBoxes();
+    history.pushState(null, "", "/");
+  });
   fishBoxContainer.appendChild(header);
   const itemsContainer = document.createElement("div");
   itemsContainer.classList.add("fish_items_container");
@@ -186,7 +210,8 @@ export function displayFishBox(fish, groupId = null) {
       const linkBox = document.createElement("div");
       linkBox.classList.add("fish_item_linkText_box");
       const link = document.createElement("a");
-      link.href = `#${id}`;
+      const groupSlug = slugify(group[0].generalClassUA || id);
+      link.href = `#${fishSlug}-${groupSlug}`;
       link.classList.add("fish_item_linkText");
       const titleUA = document.createElement("p");
       titleUA.textContent = group[0].generalClassUA || "Невідома група";
@@ -202,7 +227,7 @@ export function displayFishBox(fish, groupId = null) {
         history.pushState(
           { fishId: fish.id, groupId: id, source: "group" },
           `${fish.classNameUA} - group`,
-          `#${fish.id}-${id}`,
+          `#${fishSlug}-${groupSlug}`,
         );
         displayFishBox(fish, id);
       });

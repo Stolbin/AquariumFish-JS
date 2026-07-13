@@ -1,4 +1,4 @@
-import { fishBoxContainer, displayFishBox } from "./index.js";
+import { fishBoxContainer, displayFishBox, slugify } from "./index.js";
 import { showLoader, hideLoader } from "./show-hide_elements.js";
 import { createHeaderItem } from "./headerTitle.js";
 import { createImageNavigation } from "./imageSlider.js";
@@ -18,6 +18,11 @@ export function displayFishItemBox(
   const header = createHeaderItem(item, () => {
     displayFishBox(parentFish, isFromGroup ? groupId : null);
 
+    const fishSlug = slugify(parentFish.classNameEN);
+    const backUrl = isFromGroup
+      ? `#${fishSlug}-${slugify(groupId)}`
+      : `#${fishSlug}`;
+
     history.pushState(
       {
         fishId: parentFish.id,
@@ -25,7 +30,7 @@ export function displayFishItemBox(
         ...(isFromGroup && { groupId }),
       },
       "",
-      `#${parentFish.id}`,
+      backUrl,
     );
   });
 
@@ -104,17 +109,6 @@ export function displayFishItemBox(
   window.scrollTo({ top: 0, behavior: "auto" });
   hideLoader();
   currentItem = item;
-
-  const state = {
-    itemId: item.id,
-    parentFishId: parentFish.id,
-    source: isFromGroup ? "group" : "type",
-    ...(isFromGroup && { groupId }),
-  };
-
-  if (JSON.stringify(history.state) !== JSON.stringify(state)) {
-    history.pushState(state, item.titleUA, `#${item.id}`);
-  }
 }
 
 function createImageBox(item) {
