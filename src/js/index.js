@@ -210,7 +210,7 @@ export function displayFishBox(fish, groupId = null) {
       const linkBox = document.createElement("div");
       linkBox.classList.add("fish_item_linkText_box");
       const link = document.createElement("a");
-      const groupSlug = slugify(group[0].generalClassUA || id);
+      const groupSlug = slugify(group[0].generalClassID || id);
       link.href = `#${fishSlug}-${groupSlug}`;
       link.classList.add("fish_item_linkText");
       const titleUA = document.createElement("p");
