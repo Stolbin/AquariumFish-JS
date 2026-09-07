@@ -3,6 +3,7 @@ import { showLoader, hideLoader } from "./show-hide_elements.js";
 import { createHeaderItem } from "./headerTitle.js";
 import { createImageNavigation } from "./imageSlider.js";
 import { handleImageLoading } from "./imageLoader.js";
+import { openImageModal } from "./imageModal.js";
 
 let currentItem = null;
 
@@ -137,8 +138,27 @@ function createImageBox(item) {
     mainImage,
     item,
     currentIndex,
-    updateDisplayedImage,
+    (imgElement, newImage) => {
+      updateDisplayedImage(imgElement, newImage);
+      currentIndex =
+        item.images?.findIndex((img) => img.src === newImage.src) || 0;
+    },
   );
+
+  mainImageContainer.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    if (e.target.closest(".prev-button") || e.target.closest(".next-button"))
+      return;
+
+    openImageModal(item, currentIndex, (newImage, modalIndex) => {
+      const wrappers = thumbnailStrip.querySelectorAll(".thumbnail-wrapper");
+      if (wrappers[modalIndex]) {
+        wrappers[modalIndex].dispatchEvent(new Event("click"));
+      }
+      currentIndex = modalIndex;
+    });
+  });
 
   mainImageContainer.appendChild(prevButton);
   mainImageContainer.appendChild(nextButton);

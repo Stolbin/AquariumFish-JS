@@ -14,7 +14,10 @@ export function createImageLoader(isSmall = false) {
 export function handleImageLoading(img, container) {
   const isSmall =
     container.classList.contains("thumbnail-wrapper") ||
-    container.classList.contains("thumbnail-strip");
+    container.classList.contains("thumbnail-strip") ||
+    container.classList.contains("modal-thumbnail-wrapper") ||
+    container.classList.contains("modal-thumbnail-strip");
+
   const loader = createImageLoader(isSmall);
 
   if (!img.complete) {
